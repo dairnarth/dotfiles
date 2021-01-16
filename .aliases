@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# System
+alias ls='ls -lah --color=auto --group-directories-first'
+alias p='sudo pacman'
+alias y='yay'
+alias mkd='mkdir -pv'
+
+# Vim
+alias vp='vim -c :Prose'
+alias vc='vim -c :Code'
+alias cvrc='vc $HOME/.vimrc'
+
+# Bash
+alias ca='vc $HOME/.aliases'
+alias cbrc='vc $HOME/.bashrc'
+alias cbp='vc $HOME/.bash_profile'
+
+# Suckless
+alias mci='sudo make clean install'
+alias cdwm='cd /usr/local/src/suckless/dwm/dch-dwm && vc config.def.h'
+alias cst='cd /usr/local/src/suckless/st/ls-st && vc config.h'
+alias cdmenu='cd /usr/local/src/suckless/dmenu/dmenu-5.0 && vc config.h'
+
+# Git
+alias dfc='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
