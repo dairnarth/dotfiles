@@ -1,6 +1,6 @@
 diff -up ../original/dwm-6.2/Makefile ./Makefile
 --- ../original/dwm-6.2/Makefile	2019-02-02 12:55:28.000000000 +0000
-+++ ./Makefile	2021-01-15 00:00:56.987449126 +0000
++++ ./Makefile	2021-01-16 01:26:21.816750895 +0000
 @@ -26,7 +26,7 @@ dwm: ${OBJ}
  	${CC} -o $@ ${OBJ} ${LDFLAGS}
  
