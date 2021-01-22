@@ -14,7 +14,7 @@ if [ "$EUID" -ne 0 ]; then
 
 else
 
-    PS1='\e[30m\e[101m [\u@\h]:\e[0m \e[31m\w \n\e[30m\e[101m $(/bin/date "+%y%m%d %H%M%S") \e[0m \e[31m\$ '
+    PS1='\e[30m\e[101m [\u@\h]:\e[0m \e[36m\w \n\e[30m\e[101m $(/bin/date "+%y%m%d %H%M%S") \e[0m \e[31m\$ '
 
 fi
 
