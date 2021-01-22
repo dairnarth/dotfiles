@@ -12,7 +12,7 @@ diff -up ../original/dwm-6.2/Makefile ./Makefile
  	mkdir -p dwm-${VERSION}
 diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 --- ../original/dwm-6.2/config.def.h	2019-02-02 12:55:28.000000000 +0000
-+++ ./config.def.h	2021-01-15 22:51:24.340073935 +0000
++++ ./config.def.h	2021-01-22 00:36:45.800643366 +0000
 @@ -2,16 +2,19 @@
  
  /* appearance */
@@ -58,7 +58,7 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 -	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 +	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 +	{ "St",      NULL,     NULL,           1 << 0,    0,          1,           0,        -1 },
-+	{ "dwm-config", NULL,  NULL,           0,         1,          0,           0,        -1 },
++	{ "sys-config", NULL,  NULL,           0,         1,          0,           0,        -1 },
 +	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 +	{ "apple-music-electron", NULL, NULL,  1 << 8,    0,          0,           0,        -1 },
 +	{ "newsboat", NULL,    NULL,           1 << 6,    0,          1,           0,        -1 },
@@ -94,25 +94,27 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
  
  /* helper for spawning shell commands in the pre dwm-5.0 fashion */
  #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-@@ -58,32 +66,49 @@ static const Layout layouts[] = {
+@@ -58,32 +66,50 @@ static const Layout layouts[] = {
  static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
  static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
  static const char *termcmd[]  = { "st", NULL };
 +static const char *rsscmd[]  = { "st", "-c", "newsboat", "-e", "newsboat", NULL };
++static const char *applemusiccmd[]  = { "apple-music-electron", NULL };
 +static const char *browsercmd[]  = { "qutebrowser", NULL };
 +static const char *websearchcmd[]  = { "web_search", NULL };
 +static const char *ytcmd[]  = { "yt", "-r", NULL };
 +static const char *poweroffcmd[]  = { "safe_shutdown", NULL };
 +static const char scratchpadname[] = "scratchpad";
 +static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
-+static const char *configcmd[] = { "st", "-c", "dwm-config", "-t", "dwm-config", "-g", "80x60+2570+80", "-e", "vim", "-c", ":Code", "/usr/local/src/suckless/dwm/dch-dwm/config.def.h",  NULL };
++static const char *configcmd[] = { "st", "-c", "sys-config", "-t", "dwm-config", "-g", "80x60+2570+80", "-e", "vim", "-c", ":Code", "/usr/local/src/suckless/dwm/dch-dwm/config.def.h",  NULL };
  
  static Key keys[] = {
  	/* modifier                     key        function        argument */
 -	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 -	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 +	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
-+	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
++	{ MODKEY,                       XK_t,      spawn,          {.v = termcmd } },
++	{ MODKEY,                       XK_m,      spawn,          {.v = applemusiccmd } },
 +	{ MODKEY,                       XK_w,      spawn,          {.v = browsercmd } },
 +	{ MODKEY,                       XK_n,      spawn,          {.v = rsscmd } },
 +	{ MODKEY,                       XK_o,      spawn,          {.v = websearchcmd } },
@@ -131,14 +133,16 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 +	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
  	{ MODKEY,                       XK_Tab,    view,           {0} },
 -	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-+	{ MODKEY,                       XK_q,      killclient,     {0} },
- 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
- 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
- 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 -	{ MODKEY,                       XK_space,  setlayout,      {0} },
++	{ MODKEY,                       XK_q,      killclient,     {0} },
++	{ MODKEY|ControlMask|ShiftMask, XK_t,      setlayout,      {.v = &layouts[0]} },
++	{ MODKEY|ControlMask|ShiftMask, XK_f,      setlayout,      {.v = &layouts[1]} },
 +	{ MODKEY|ControlMask,           XK_space,  setlayout,      {0} },
  	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-+	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
++	{ MODKEY,                       XK_Return, togglefullscr,  {0} },
 +	{ MODKEY,                       XK_s,      togglesticky,   {0} },
  	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
  	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
@@ -153,7 +157,7 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
  	TAGKEYS(                        XK_1,                      0)
  	TAGKEYS(                        XK_2,                      1)
  	TAGKEYS(                        XK_3,                      2)
-@@ -94,14 +119,15 @@ static Key keys[] = {
+@@ -94,14 +120,15 @@ static Key keys[] = {
  	TAGKEYS(                        XK_8,                      7)
  	TAGKEYS(                        XK_9,                      8)
  	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },

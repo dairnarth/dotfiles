@@ -1,0 +1,35 @@
+auto-reload yes
+
+# external-url-viewer 
+
+bind-key j down
+bind-key k up
+bind-key j next articlelist
+bind-key k prev articlelist
+bind-key J next-feed articlelist
+bind-key K prev-feed articlelist
+bind-key G end
+bind-key g home
+bind-key d pagedown
+bind-key u pageup
+bind-key l open
+bind-key h quit
+bind-key a toggle-article-read
+
+color background         default   default
+color listnormal         default   default
+color listnormal_unread  yellow    default  bold
+color listfocus          black     white
+color listfocus_unread   black     white    bold
+color info               black     blue 
+color article            default   default
+
+highlight all "===.*===" black cyan bold
+highlight all "---.*---" green
+highlight feedlist ".*(0/0))" black
+highlight all "WAN Show" green
+
+browser linkhandler
+macro , open-in-browser
+macro v set browser "mpv" ; open-in-browser ; set browser linkhandler
+macro q set browser "qutebrowser" ; open-in-browser ; set browser linkhandler
