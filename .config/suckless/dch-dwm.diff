@@ -12,7 +12,7 @@ diff -up ../original/dwm-6.2/Makefile ./Makefile
  	mkdir -p dwm-${VERSION}
 diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 --- ../original/dwm-6.2/config.def.h	2019-02-02 12:55:28.000000000 +0000
-+++ ./config.def.h	2021-01-22 00:36:45.800643366 +0000
++++ ./config.def.h	2021-01-23 09:16:30.951253177 +0000
 @@ -2,16 +2,19 @@
  
  /* appearance */
@@ -40,7 +40,7 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
  static const char *colors[][3]      = {
  	/*               fg         bg         border   */
  	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-@@ -19,37 +22,42 @@ static const char *colors[][3]      = {
+@@ -19,71 +22,97 @@ static const char *colors[][3]      = {
  };
  
  /* tagging */
@@ -62,6 +62,7 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 +	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 +	{ "apple-music-electron", NULL, NULL,  1 << 8,    0,          0,           0,        -1 },
 +	{ "newsboat", NULL,    NULL,           1 << 6,    0,          1,           0,        -1 },
++	{ "ranger",  NULL,     NULL,           1 << 2,    0,          1,           0,        -1 },
 +	{ "mpv",     NULL,     NULL,           1 << 7,    0,          0,           0,        -1 },
 +	{ "qutebrowser", NULL, NULL,           1 << 1,    0,          0,           0,        -1 },
  };
@@ -94,10 +95,13 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
  
  /* helper for spawning shell commands in the pre dwm-5.0 fashion */
  #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-@@ -58,32 +66,50 @@ static const Layout layouts[] = {
+ 
+ /* commands */
  static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
- static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
++static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-p", "Run:", NULL };
  static const char *termcmd[]  = { "st", NULL };
++static const char *fmcmd[]  = { "st", "-e", "ranger", NULL };
 +static const char *rsscmd[]  = { "st", "-c", "newsboat", "-e", "newsboat", NULL };
 +static const char *applemusiccmd[]  = { "apple-music-electron", NULL };
 +static const char *browsercmd[]  = { "qutebrowser", NULL };
@@ -114,6 +118,7 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 -	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 +	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
 +	{ MODKEY,                       XK_t,      spawn,          {.v = termcmd } },
++	{ MODKEY,                       XK_r,      spawn,          {.v = fmcmd } },
 +	{ MODKEY,                       XK_m,      spawn,          {.v = applemusiccmd } },
 +	{ MODKEY,                       XK_w,      spawn,          {.v = browsercmd } },
 +	{ MODKEY,                       XK_n,      spawn,          {.v = rsscmd } },
@@ -157,7 +162,7 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
  	TAGKEYS(                        XK_1,                      0)
  	TAGKEYS(                        XK_2,                      1)
  	TAGKEYS(                        XK_3,                      2)
-@@ -94,14 +120,15 @@ static Key keys[] = {
+@@ -94,14 +123,15 @@ static Key keys[] = {
  	TAGKEYS(                        XK_8,                      7)
  	TAGKEYS(                        XK_9,                      8)
  	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },

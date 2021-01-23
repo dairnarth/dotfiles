@@ -1,0 +1,190 @@
+diff -up ../original/dmenu-5.0/config.def.h ./config.def.h
+--- ../original/dmenu-5.0/config.def.h	2020-09-02 17:37:07.000000000 +0100
++++ ./config.def.h	2021-01-23 08:16:51.284549389 +0000
+@@ -4,13 +4,13 @@
+ static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
+ /* -fn option overrides fonts[0]; default X11 font or font set */
+ static const char *fonts[] = {
+-	"monospace:size=10"
++	"Anonymous Pro:bold:size=11"
+ };
+ static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
+ static const char *colors[SchemeLast][2] = {
+ 	/*     fg         bg       */
+-	[SchemeNorm] = { "#bbbbbb", "#222222" },
+-	[SchemeSel] = { "#eeeeee", "#005577" },
++	[SchemeNorm] = { "#ebdbb2", "#282828" },
++	[SchemeSel] = { "#282828", "#ebdbb2" },
+ 	[SchemeOut] = { "#000000", "#00ffff" },
+ };
+ /* -l option; if nonzero, dmenu uses vertical list with given number of lines */
+@@ -21,3 +21,6 @@ static unsigned int lines      = 0;
+  * for example: " /?\"&[]"
+  */
+ static const char worddelimiters[] = " ";
++
++/* -n option; preselected item starting from 0 */
++static unsigned int preselected = 0;
+Only in ./: config.def.h.rej
+Only in ./: config.h
+Only in ./: dmenu
+diff -up ../original/dmenu-5.0/dmenu.1 ./dmenu.1
+--- ../original/dmenu-5.0/dmenu.1	2020-09-02 17:37:07.000000000 +0100
++++ ./dmenu.1	2021-01-23 08:16:51.284549389 +0000
+@@ -8,6 +8,12 @@ dmenu \- dynamic menu
+ .IR lines ]
+ .RB [ \-m
+ .IR monitor ]
++.RB [ \-x
++.IR xoffset ]
++.RB [ \-y
++.IR yoffset ]
++.RB [ \-z
++.IR width ]
+ .RB [ \-p
+ .IR prompt ]
+ .RB [ \-fn
+@@ -22,6 +28,8 @@ dmenu \- dynamic menu
+ .IR color ]
+ .RB [ \-w
+ .IR windowid ]
++.RB [ \-n
++.IR number ]
+ .P
+ .BR dmenu_run " ..."
+ .SH DESCRIPTION
+@@ -54,6 +62,24 @@ dmenu lists items vertically, with the g
+ dmenu is displayed on the monitor number supplied. Monitor numbers are starting
+ from 0.
+ .TP
++.BI \-x " xoffset"
++dmenu is placed at this offset measured from the left side of the monitor.
++Can be negative.
++If option
++.B \-m
++is present, the measurement will use the given monitor.
++.TP
++.BI \-y " yoffset"
++dmenu is placed at this offset measured from the top of the monitor.  If the
++.B \-b
++option is used, the offset is measured from the bottom.  Can be negative.
++If option
++.B \-m
++is present, the measurement will use the given monitor.
++.TP
++.BI \-z " width"
++sets the width of the dmenu window.
++.TP
+ .BI \-p " prompt"
+ defines the prompt to be displayed to the left of the input field.
+ .TP
+@@ -80,6 +106,9 @@ prints version information to stdout, th
+ .TP
+ .BI \-w " windowid"
+ embed into windowid.
++.TP
++.BI \-n " number"
++preseslected item starting from 0.
+ .SH USAGE
+ dmenu is completely controlled by the keyboard.  Items are selected using the
+ arrow keys, page up, page down, home, and end.
+Only in ./: dmenu.1.orig
+Only in ./: dmenu.1.rej
+diff -up ../original/dmenu-5.0/dmenu.c ./dmenu.c
+--- ../original/dmenu-5.0/dmenu.c	2020-09-02 17:37:07.000000000 +0100
++++ ./dmenu.c	2021-01-23 08:17:45.734549947 +0000
+@@ -37,6 +37,9 @@ struct item {
+ static char text[BUFSIZ] = "";
+ static char *embed;
+ static int bh, mw, mh;
++static int dmx = 305; /* put dmenu at this x offset */
++static int dmy = 0; /* put dmenu at this y offset (measured from the bottom if topbar is 0) */
++static unsigned int dmw = 1493; /* make dmenu this wide */
+ static int inputw = 0, promptw;
+ static int lrpad; /* sum of left and right padding */
+ static size_t cursor;
+@@ -551,8 +554,19 @@ static void
+ run(void)
+ {
+ 	XEvent ev;
++	int i;
+ 
+ 	while (!XNextEvent(dpy, &ev)) {
++		if (preselected) {
++			for (i = 0; i < preselected; i++) {
++				if (sel && sel->right && (sel = sel->right) == next) {
++					curr = next;
++					calcoffsets();
++				}
++			}
++			drawmenu();
++			preselected = 0;
++		}
+ 		if (XFilterEvent(&ev, win))
+ 			continue;
+ 		switch(ev.type) {
+@@ -637,9 +651,9 @@ setup(void)
+ 				if (INTERSECT(x, y, 1, 1, info[i]))
+ 					break;
+ 
+-		x = info[i].x_org;
+-		y = info[i].y_org + (topbar ? 0 : info[i].height - mh);
+-		mw = info[i].width;
++		x = info[i].x_org + dmx;
++		y = info[i].y_org + (topbar ? dmy : info[i].height - mh - dmy);
++		mw = (dmw>0 ? dmw : info[i].width);
+ 		XFree(info);
+ 	} else
+ #endif
+@@ -647,9 +661,9 @@ setup(void)
+ 		if (!XGetWindowAttributes(dpy, parentwin, &wa))
+ 			die("could not get embedding window attributes: 0x%lx",
+ 			    parentwin);
+-		x = 0;
+-		y = topbar ? 0 : wa.height - mh;
+-		mw = wa.width;
++		x = dmx;
++		y = topbar ? dmy : wa.height - mh - dmy;
++		mw = (dmw>0 ? dmw : wa.width);
+ 	}
+ 	promptw = (prompt && *prompt) ? TEXTW(prompt) - lrpad / 4 : 0;
+ 	inputw = MIN(inputw, mw/3);
+@@ -690,7 +704,8 @@ static void
+ usage(void)
+ {
+ 	fputs("usage: dmenu [-bfiv] [-l lines] [-p prompt] [-fn font] [-m monitor]\n"
+-	      "             [-nb color] [-nf color] [-sb color] [-sf color] [-w windowid]\n", stderr);
++	      "             [-x xoffset] [-y yoffset] [-z width]\n"
++	      "             [-nb color] [-nf color] [-sb color] [-sf color] [-w windowid] [-n number]\n", stderr);
+ 	exit(1);
+ }
+ 
+@@ -717,6 +732,12 @@ main(int argc, char *argv[])
+ 		/* these options take one argument */
+ 		else if (!strcmp(argv[i], "-l"))   /* number of lines in vertical list */
+ 			lines = atoi(argv[++i]);
++		else if (!strcmp(argv[i], "-x"))   /* window x offset */
++			dmx = atoi(argv[++i]);
++		else if (!strcmp(argv[i], "-y"))   /* window y offset (from bottom up if -b) */
++			dmy = atoi(argv[++i]);
++		else if (!strcmp(argv[i], "-z"))   /* make dmenu this wide */
++			dmw = atoi(argv[++i]);
+ 		else if (!strcmp(argv[i], "-m"))
+ 			mon = atoi(argv[++i]);
+ 		else if (!strcmp(argv[i], "-p"))   /* adds prompt to left of input field */
+@@ -733,6 +754,8 @@ main(int argc, char *argv[])
+ 			colors[SchemeSel][ColFg] = argv[++i];
+ 		else if (!strcmp(argv[i], "-w"))   /* embedding window id */
+ 			embed = argv[++i];
++		else if (!strcmp(argv[i], "-n"))   /* preselected item */
++			preselected = atoi(argv[++i]);
+ 		else
+ 			usage();
+ 
+Only in ./: dmenu.c.orig
+Only in ./: dmenu.c.rej
+Only in ./: dmenu.o
+Only in ./: drw.o
+Only in ./: stest
+Only in ./: stest.o
+Only in ./: util.o

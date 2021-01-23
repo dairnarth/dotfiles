@@ -21,7 +21,8 @@ alias mci='sudo make clean install'
 alias cdwm='cd /usr/local/src/suckless/dwm/dch-dwm && vc config.def.h'
 alias cst='cd /usr/local/src/suckless/st/ls-st && vc config.h'
 alias cdmenu='cd /usr/local/src/suckless/dmenu/dch-dmenu && vc config.def.h'
-alias diffdwm="rm $HOME/.config/suckless/dch-dwm.diff && cd /usr/local/src/suckless/dwm/dch-dwm/ && diff -up ../original/dwm-6.2/ ./ > $HOME/.config/suckless/dch-dwm.diff"
+alias diffdwm="rm $HOME/.config/suckless/dch-dwm.diff && cd /usr/local/src/suckless/dwm/dch-dwm/ && diff -up ../original/dwm-6.2/ ./ > $HOME/.config/suckless/dch-dwm.diff && cd"
+alias diffdmenu="rm $HOME/.config/suckless/dch-dmenu.diff && cd /usr/local/src/suckless/dmenu/dch-dmenu/ && diff -up ../original/dmenu-5.0/ ./ > $HOME/.config/suckless/dch-dmenu.diff && cd"
 
 # Git
 alias dfc='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
