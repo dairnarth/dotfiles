@@ -52,6 +52,6 @@ setxkbmap gb &
 dwm-bar &
 xrandr --output HDMI-0 --auto --output DP-0 --auto --left-of HDMI-0 --output DP-2 --auto --right-of HDMI-0 &
 nitrogen --restore &
-picom &
+picom --experimental-backends &
 unclutter --timeout 1 --exclude-root &
 exec dwm
