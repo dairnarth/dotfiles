@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =6
-let g:netrw_dirhist_6='/home/dch/.scripts'
-let g:netrw_dirhist_5='/home/dch/website'
-let g:netrw_dirhist_4='/home/dch/.scripts'
-let g:netrw_dirhist_3='/home/dch/.config/picom'
-let g:netrw_dirhist_2='/home/dch/.newsboat'
-let g:netrw_dirhist_1='/home/dch/.config/rofi'
