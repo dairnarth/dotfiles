@@ -58,4 +58,6 @@ nnoremap <s-tab> za
 let mapleader =" "
 
     map <leader>f :Goyo \| set linebreak<CR>
+    map <leader>c :Code  <CR> 
+    map <leader>p :Prose <CR> 
 

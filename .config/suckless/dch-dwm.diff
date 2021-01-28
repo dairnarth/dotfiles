@@ -12,7 +12,7 @@ diff -up ../original/dwm-6.2/Makefile ./Makefile
  	mkdir -p dwm-${VERSION}
 diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 --- ../original/dwm-6.2/config.def.h	2019-02-02 12:55:28.000000000 +0000
-+++ ./config.def.h	2021-01-23 09:16:30.951253177 +0000
++++ ./config.def.h	2021-01-28 10:23:39.364118954 +0000
 @@ -2,16 +2,19 @@
  
  /* appearance */
@@ -40,13 +40,13 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
  static const char *colors[][3]      = {
  	/*               fg         bg         border   */
  	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-@@ -19,71 +22,97 @@ static const char *colors[][3]      = {
+@@ -19,71 +22,101 @@ static const char *colors[][3]      = {
  };
  
  /* tagging */
 -static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 +// static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-+static const char *tags[] = { "", "", "③", "④", "⑤", "", "", "", "" };
++static const char *tags[] = { "", "", "③", "", "", "", "", "", "" };
  
  static const Rule rules[] = {
  	/* xprop(1):
@@ -56,15 +56,18 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 -	/* class      instance    title       tags mask     isfloating   monitor */
 -	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 -	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
-+	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-+	{ "St",      NULL,     NULL,           1 << 0,    0,          1,           0,        -1 },
-+	{ "sys-config", NULL,  NULL,           0,         1,          0,           0,        -1 },
-+	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
-+	{ "apple-music-electron", NULL, NULL,  1 << 8,    0,          0,           0,        -1 },
-+	{ "newsboat", NULL,    NULL,           1 << 6,    0,          1,           0,        -1 },
-+	{ "ranger",  NULL,     NULL,           1 << 2,    0,          1,           0,        -1 },
-+	{ "mpv",     NULL,     NULL,           1 << 7,    0,          0,           0,        -1 },
-+	{ "qutebrowser", NULL, NULL,           1 << 1,    0,          0,           0,        -1 },
++	/* class                    instance    title           tags mask  isfloating  isterminal  noswallow  monitor */
++	{ "St",                     NULL,       NULL,           1 << 0,    0,          1,           0,        -1 },
++	{ "sys-config",             NULL,       NULL,           0,         1,          0,           0,        -1 },
++	{ NULL,                     NULL,       "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
++	{ "qutebrowser",            NULL,       NULL,           1 << 3,    0,          0,           0,        -1 },
++	{ "Tor Browser",            NULL,       NULL,           1 << 4,    1,          0,           0,        -1 },
++	{ "qbittorrent v4.3.3",            NULL,       NULL,           1 << 4,    0,          0,           0,        -1 },
++	{ "ranger",                 NULL,       NULL,           1 << 1,    0,          1,           0,        -1 },
++	{ "newsboat",               NULL,       NULL,           1 << 6,    0,          1,           0,        -1 },
++	{ "mpv",                    NULL,       NULL,           1 << 7,    0,          0,           0,        -1 },
++	{ "cmus",                   NULL,       NULL,           1 << 8,    0,          0,           0,        -1 },
++	{ "apple-music-electron",   NULL,       NULL,           1 << 8,    0,          0,           0,        -1 },
  };
  
  /* layout(s) */
@@ -101,16 +104,16 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 -static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 +static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-p", "Run:", NULL };
  static const char *termcmd[]  = { "st", NULL };
-+static const char *fmcmd[]  = { "st", "-e", "ranger", NULL };
++static const char *fmcmd[]  = { "st", "-c", "ranger", "-e", "ranger", NULL };
 +static const char *rsscmd[]  = { "st", "-c", "newsboat", "-e", "newsboat", NULL };
-+static const char *applemusiccmd[]  = { "apple-music-electron", NULL };
-+static const char *browsercmd[]  = { "qutebrowser", NULL };
++static const char *musiccmd[]  = { "appicker-music", NULL };
++static const char *browsercmd[]  = { "appicker-web", NULL };
 +static const char *websearchcmd[]  = { "web_search", NULL };
 +static const char *ytcmd[]  = { "yt", "-r", NULL };
 +static const char *poweroffcmd[]  = { "safe_shutdown", NULL };
 +static const char scratchpadname[] = "scratchpad";
 +static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
-+static const char *configcmd[] = { "st", "-c", "sys-config", "-t", "dwm-config", "-g", "80x60+2570+80", "-e", "vim", "-c", ":Code", "/usr/local/src/suckless/dwm/dch-dwm/config.def.h",  NULL };
++static const char *configcmd[] = { "config_menu", NULL };
  
  static Key keys[] = {
  	/* modifier                     key        function        argument */
@@ -119,7 +122,8 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 +	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
 +	{ MODKEY,                       XK_t,      spawn,          {.v = termcmd } },
 +	{ MODKEY,                       XK_r,      spawn,          {.v = fmcmd } },
-+	{ MODKEY,                       XK_m,      spawn,          {.v = applemusiccmd } },
++	{ MODKEY,                       XK_c,      spawn,          {.v = configcmd } },
++	{ MODKEY,                       XK_m,      spawn,          {.v = musiccmd } },
 +	{ MODKEY,                       XK_w,      spawn,          {.v = browsercmd } },
 +	{ MODKEY,                       XK_n,      spawn,          {.v = rsscmd } },
 +	{ MODKEY,                       XK_o,      spawn,          {.v = websearchcmd } },
@@ -162,7 +166,7 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
  	TAGKEYS(                        XK_1,                      0)
  	TAGKEYS(                        XK_2,                      1)
  	TAGKEYS(                        XK_3,                      2)
-@@ -94,14 +123,15 @@ static Key keys[] = {
+@@ -94,14 +127,15 @@ static Key keys[] = {
  	TAGKEYS(                        XK_8,                      7)
  	TAGKEYS(                        XK_9,                      8)
  	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },

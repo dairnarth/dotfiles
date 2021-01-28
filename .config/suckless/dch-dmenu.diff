@@ -92,14 +92,14 @@ Only in ./: dmenu.1.orig
 Only in ./: dmenu.1.rej
 diff -up ../original/dmenu-5.0/dmenu.c ./dmenu.c
 --- ../original/dmenu-5.0/dmenu.c	2020-09-02 17:37:07.000000000 +0100
-+++ ./dmenu.c	2021-01-23 08:17:45.734549947 +0000
++++ ./dmenu.c	2021-01-28 10:39:49.924119801 +0000
 @@ -37,6 +37,9 @@ struct item {
  static char text[BUFSIZ] = "";
  static char *embed;
  static int bh, mw, mh;
-+static int dmx = 305; /* put dmenu at this x offset */
++static int dmx = 304; /* put dmenu at this x offset */
 +static int dmy = 0; /* put dmenu at this y offset (measured from the bottom if topbar is 0) */
-+static unsigned int dmw = 1493; /* make dmenu this wide */
++static unsigned int dmw = 1494; /* make dmenu this wide */
  static int inputw = 0, promptw;
  static int lrpad; /* sum of left and right padding */
  static size_t cursor;
