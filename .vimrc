@@ -37,7 +37,7 @@ hi Normal guibg=NONE ctermbg=NONE
 command! Prose inoremap <buffer> . .<C-G>u|
             \ inoremap <buffer> ! !<C-G>u|
             \ inoremap <buffer> ? ?<C-G>u|
-            \ setlocal spell spelllang=en nolist nowrap tw=80 fo=t1|
+            \ setlocal spell spelllang=en nolist nowrap tw=80 fo=t1 fdm=manual|
             \ augroup PROSE|
             \   autocmd InsertEnter <buffer> set fo+=a|
             \   autocmd InsertLeave <buffer> set fo-=a|
@@ -46,12 +46,14 @@ command! Prose inoremap <buffer> . .<C-G>u|
 command! Code silent! iunmap <buffer> .|
             \ silent! iunmap <buffer> !|
             \ silent! iunmap <buffer> ?|
-            \ setlocal nospell nolist nowrap tw=0 fo=tcq fo-=a |
+            \ setlocal nospell nolist nowrap tw=0 fo=tcq fo-=a fdm=indent|
             \ silent! autocmd! PROSE * <buffer>
 
 if executable('rg')
     let g:rg_derive_root='true'
 endif
+
+nnoremap <s-tab> za
 
 let mapleader =" "
 

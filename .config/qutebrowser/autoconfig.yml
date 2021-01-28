@@ -50,6 +50,7 @@ settings:
     https://www.chess.com: false
     https://www.fnac.com: false
     https://www.reddit.com: false
+    https://www.youtube.com: false
   downloads.location.directory:
     global: ~/Downloads
   downloads.location.remember:

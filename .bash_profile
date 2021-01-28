@@ -42,8 +42,6 @@ neofetch
 
 sleep 0.3
 
-clear
-
 if [ "$(tty)" == "/dev/tty1" ]; then
     exec startx
 fi
