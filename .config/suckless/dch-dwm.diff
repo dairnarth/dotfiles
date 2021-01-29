@@ -12,7 +12,7 @@ diff -up ../original/dwm-6.2/Makefile ./Makefile
  	mkdir -p dwm-${VERSION}
 diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 --- ../original/dwm-6.2/config.def.h	2019-02-02 12:55:28.000000000 +0000
-+++ ./config.def.h	2021-01-28 10:23:39.364118954 +0000
++++ ./config.def.h	2021-01-28 11:20:52.997455426 +0000
 @@ -2,16 +2,19 @@
  
  /* appearance */
@@ -56,18 +56,18 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 -	/* class      instance    title       tags mask     isfloating   monitor */
 -	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 -	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
-+	/* class                    instance    title           tags mask  isfloating  isterminal  noswallow  monitor */
-+	{ "St",                     NULL,       NULL,           1 << 0,    0,          1,           0,        -1 },
-+	{ "sys-config",             NULL,       NULL,           0,         1,          0,           0,        -1 },
-+	{ NULL,                     NULL,       "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
-+	{ "qutebrowser",            NULL,       NULL,           1 << 3,    0,          0,           0,        -1 },
-+	{ "Tor Browser",            NULL,       NULL,           1 << 4,    1,          0,           0,        -1 },
-+	{ "qbittorrent v4.3.3",            NULL,       NULL,           1 << 4,    0,          0,           0,        -1 },
-+	{ "ranger",                 NULL,       NULL,           1 << 1,    0,          1,           0,        -1 },
-+	{ "newsboat",               NULL,       NULL,           1 << 6,    0,          1,           0,        -1 },
-+	{ "mpv",                    NULL,       NULL,           1 << 7,    0,          0,           0,        -1 },
-+	{ "cmus",                   NULL,       NULL,           1 << 8,    0,          0,           0,        -1 },
-+	{ "apple-music-electron",   NULL,       NULL,           1 << 8,    0,          0,           0,        -1 },
++	/* class                    instance    title                   tags mask  isfloating  isterminal  noswallow  monitor */
++	{ "St",                     NULL,       NULL,                   1 << 0,    0,          1,           0,        -1 },
++	{ "sys-config",             NULL,       NULL,                   0,         1,          0,           0,        -1 },
++	{ NULL,                     NULL,       "Event Tester",         0,         0,          0,           1,        -1 }, /* xev */
++	{ "qutebrowser",            NULL,       NULL,                   1 << 3,    0,          0,           0,        -1 },
++	{ "Tor Browser",            NULL,       NULL,                   1 << 4,    1,          0,           0,        -1 },
++	{ NULL,                     NULL,       "qbittorrent v4.3.3",   1 << 4,    0,          0,           0,        -1 },
++	{ "ranger",                 NULL,       NULL,                   1 << 1,    0,          1,           0,        -1 },
++	{ "newsboat",               NULL,       NULL,                   1 << 6,    0,          1,           0,        -1 },
++	{ "mpv",                    NULL,       NULL,                   1 << 7,    0,          0,           0,        -1 },
++	{ "cmus",                   NULL,       NULL,                   1 << 8,    0,          0,           0,        -1 },
++	{ "apple-music-electron",   NULL,       NULL,                   1 << 8,    0,          0,           0,        -1 },
  };
  
  /* layout(s) */

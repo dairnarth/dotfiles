@@ -2,7 +2,7 @@
 
 # System
 alias ls='ls -lah --color=auto --group-directories-first'
-alias p='sudo pacman'
+alias p='doas pacman'
 alias y='yay'
 alias mkd='mkdir -pv'
 
@@ -17,7 +17,7 @@ alias cbrc='vc $HOME/.bashrc'
 alias cbp='vc $HOME/.bash_profile'
 
 # Suckless
-alias mci='sudo make clean install'
+alias mci='doas make clean install'
 alias cdwm='cd /usr/local/src/suckless/dwm/dch-dwm && vc config.def.h'
 alias cst='cd /usr/local/src/suckless/st/ls-st && vc config.h'
 alias cdmenu='cd /usr/local/src/suckless/dmenu/dch-dmenu && vc config.def.h'

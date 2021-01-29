@@ -38,7 +38,7 @@ echo -e $'\e[0;36m   ▟███▀▘                       ▝▀███▙
 echo -e $'\e[0;36m  ▟▛▀                               ▀▜▙                                       '
 echo -e $'\e[0m                                                                             '
 
-neofetch
+doas surfshark-vpn
 
 sleep 0.3
 
