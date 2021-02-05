@@ -9,6 +9,26 @@ export ALTBROWSER="lynx"
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
+if [ "$TERM" = "linux" ]; then
+    echo -en "\e]P0282828"   # black
+    echo -en "\e]P1cc241d"   # dark red
+    echo -en "\e]P298971a"   # dark green
+    echo -en "\e]P3d79921"   # dark yellow
+    echo -en "\e]P4458588"   # dark blue
+    echo -en "\e]P5b16286"   # dark magenta
+    echo -en "\e]P6689d6a"   # dark cyan
+    echo -en "\e]P7a89984"   # light grey
+    echo -en "\e]P8928374"   # dark grey
+    echo -en "\e]P9fb4934"   # light red
+    echo -en "\e]PAb8bb26"   # light green 
+    echo -en "\e]PBfabd2f"   # light yellow
+    echo -en "\e]PC83a598"   # light blue
+    echo -en "\e]PDd3869b"   # light magenta
+    echo -en "\e]PE8ec07c"   # light cyan
+    echo -en "\e]PFebdbb2"   # white
+    clear
+fi
+
 echo -e $'                                                                              '
 echo -e $'\e[0;36m                    ▄                                                         ' 
 echo -e $'\e[0;36m                   ▟█▙         \e[1;31m....             \e[35m...                           '
@@ -38,30 +58,41 @@ echo -e $'\e[0;36m   ▟███▀▘                       ▝▀███▙
 echo -e $'\e[0;36m  ▟▛▀                               ▀▜▙                                       '
 echo -e $'\e[0m                                                                             '
 
-doas surfshark-vpn
+keychain -q ~/.ssh/id_rsa && . ~/.keychain/$"dch-pc"-sh && echo -e "\n\e[1m [ \e[32mKEYS UNLOCKED\e[0m\e[1m ] \e[0m\n"
 
-sleep 0.3
-
-if [ "$(tty)" == "/dev/tty1" ]; then
-    exec startx
+if [ -e "~/PlexMedia/Movies/" ]; then 
+    echo -e "\n\e[1m [ \e[32mPLEXMEDIA MOUNTED\e[0m\e[1m ] \e[0m\n"
+else
+    echo -n "Mount PlexMedia? [Y/n]: "
+    read -r plexmediaYN
+    case "$plexmediaYN" in
+        y | Y | "")
+            sshfs cs@192.168.1.110:Media/ PlexMedia/ && echo -e "\n\e[1m [ \e[32mPLEXMEDIA MOUNTED\e[0m\e[1m ] \e[0m\n" || echo -e "\n\e[1m [ \e[31mPLEXMEDIA NOT MOUNTED\e[0m\e[1m ] \e[0m\n" ;;
+        n | *)
+            echo -e "\n\e[1m [ \e[31mPLEXMEDIA NOT MOUNTED\e[0m\e[1m ] \e[0m\n" ;;
+    esac
 fi
 
-if [ "$TERM" = "linux" ]; then
-    echo -en "\e]P0282828"   # black
-    echo -en "\e]P1cc241d"   # dark red
-    echo -en "\e]P298971a"   # dark green
-    echo -en "\e]P3d79921"   # dark yellow
-    echo -en "\e]P4458588"   # dark blue
-    echo -en "\e]P5b16286"   # dark magenta
-    echo -en "\e]P6689d6a"   # dark cyan
-    echo -en "\e]P7a89984"   # light grey
-    echo -en "\e]P8928374"   # dark grey
-    echo -en "\e]P9fb4934"   # light red
-    echo -en "\e]PAb8bb26"   # light green 
-    echo -en "\e]PBfabd2f"   # light yellow
-    echo -en "\e]PC83a598"   # light blue
-    echo -en "\e]PDd3869b"   # light magenta
-    echo -en "\e]PE8ec07c"   # light cyan
-    echo -en "\e]PFebdbb2"   # white
-    clear
+if pgrep -f "surfshark-vpn"; then 
+    echo -e "\n\e[1m [ \e[32mVPN CONNECTED\e[0m\e[1m ] \e[0m\n"
+else
+    echo -n "Enable VPN? [Y/n]: "
+    read -r vpnYN
+    case "$vpnYN" in
+        y | Y | "")
+            doas surfshark-vpn && echo -e "\n\e[1m [ \e[32mVPN CONNECTED\e[0m\e[1m ] \e[0m\n" || echo -e "\n\e[1m [ \e[31mVPN NOT CONNECTED\e[0m\e[1m ] \e[0m\n" ;;
+        n | *)
+            echo -e "\n\e[1m [ \e[31mVPN NOT CONNECTED\e[0m\e[1m ] \e[0m\n" ;;
+    esac
+fi
+
+if [ "$(tty)" == "/dev/tty1" ]; then
+    echo -n "Start X? [Y/n]: "
+    read -r startxYN
+    case "$startxYN" in 
+        y | Y | "")
+            exec startx ;;
+        n | N | *)
+            echo -e "\n\e[1m [ \e[31mX NOT STARTED\e[0m\e[1m ] \e[0m\n" ;;
+    esac
 fi
