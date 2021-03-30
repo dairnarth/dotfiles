@@ -58,41 +58,4 @@ echo -e $'\e[0;36m   ▟███▀▘                       ▝▀███▙
 echo -e $'\e[0;36m  ▟▛▀                               ▀▜▙                                       '
 echo -e $'\e[0m                                                                             '
 
-keychain -q ~/.ssh/id_rsa && . ~/.keychain/$"dch-pc"-sh && echo -e "\n\e[1m [ \e[32mKEYS UNLOCKED\e[0m\e[1m ] \e[0m\n"
-
-if [ -e "~/PlexMedia/Movies/" ]; then 
-    echo -e "\n\e[1m [ \e[32mPLEXMEDIA MOUNTED\e[0m\e[1m ] \e[0m\n"
-else
-    echo -n "Mount PlexMedia? [Y/n]: "
-    read -r plexmediaYN
-    case "$plexmediaYN" in
-        y | Y | "")
-            sshfs cs@192.168.1.110:Media/ PlexMedia/ && echo -e "\n\e[1m [ \e[32mPLEXMEDIA MOUNTED\e[0m\e[1m ] \e[0m\n" || echo -e "\n\e[1m [ \e[31mPLEXMEDIA NOT MOUNTED\e[0m\e[1m ] \e[0m\n" ;;
-        n | *)
-            echo -e "\n\e[1m [ \e[31mPLEXMEDIA NOT MOUNTED\e[0m\e[1m ] \e[0m\n" ;;
-    esac
-fi
-
-if pgrep -f "surfshark-vpn"; then 
-    echo -e "\n\e[1m [ \e[32mVPN CONNECTED\e[0m\e[1m ] \e[0m\n"
-else
-    echo -n "Enable VPN? [Y/n]: "
-    read -r vpnYN
-    case "$vpnYN" in
-        y | Y | "")
-            doas surfshark-vpn && echo -e "\n\e[1m [ \e[32mVPN CONNECTED\e[0m\e[1m ] \e[0m\n" || echo -e "\n\e[1m [ \e[31mVPN NOT CONNECTED\e[0m\e[1m ] \e[0m\n" ;;
-        n | *)
-            echo -e "\n\e[1m [ \e[31mVPN NOT CONNECTED\e[0m\e[1m ] \e[0m\n" ;;
-    esac
-fi
-
-if [ "$(tty)" == "/dev/tty1" ]; then
-    echo -n "Start X? [Y/n]: "
-    read -r startxYN
-    case "$startxYN" in 
-        y | Y | "")
-            exec startx ;;
-        n | N | *)
-            echo -e "\n\e[1m [ \e[31mX NOT STARTED\e[0m\e[1m ] \e[0m\n" ;;
-    esac
-fi
+[[ -e $HOME/.scripts/init/preX ]] && . $HOME/.scripts/init/preX

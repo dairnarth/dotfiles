@@ -28,7 +28,7 @@ highlight all "===.*===" black cyan bold
 highlight all "---.*---" green default bold
 highlight feedlist " N " blue
 highlight feedlist ".*(0/0))" black
-highlight feedlist "._." black
+highlight feedlist "._.*_." black
 highlight all "WAN Show" green
 
 browser linkhandler

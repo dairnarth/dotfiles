@@ -1,53 +1,52 @@
-._.
-=======NEWS========
-._.
-http://feeds.bbci.co.uk/news/rss.xml                                        "~BBC News - Home"                      "News"      "BBC"
-._.
-======YOUTUBE======
-._.
--------Music-------
-https://youtube.com/feeds/videos.xml?channel_id=UCnkp4xDOwqqJD7sSM3xdUiQ    "~Adam Neely"                           "YouTube"   "Music"
-https://youtube.com/feeds/videos.xml?channel_id=UCXCXxhRVYvBOX45_gxr0iHA    "~Christian Henson Music"               "YouTube"   "Music"
-https://youtube.com/feeds/videos.xml?channel_id=UCMHG0rJtVF1LohiP63FJakw    "~Guy Michelmore"                       "YouTube"   "Music"
-https://youtube.com/feeds/videos.xml?channel_id=UCtmY49Zn4l0RMJnTWfV7Wsg    "~Jacob Collier"                        "YouTube"   "Music"
-https://youtube.com/feeds/videos.xml?channel_id=UCafxR2HWJRmMfSdyZXvZMTw    "~LOOK MUM NO COMPUTER"                 "YouTube"   "Music"
-https://youtube.com/feeds/videos.xml?channel_id=UCJquYOG5EL82sKTfH9aMA9Q    "~Rick Beato"                           "YouTube"   "Music"
-https://youtube.com/feeds/videos.xml?channel_id=UCapo4XcpVOlTLkbKIDL0WlA    "~You Suck at Producing"                "YouTube"   "Music"
-._.
+._________________.
+=======MUSIC=======
+._________________.
+https://youtube.com/feeds/videos.xml?channel_id=UCnkp4xDOwqqJD7sSM3xdUiQ    "~Adam Neely                            | YT  |"    "Music"
+https://youtube.com/feeds/videos.xml?channel_id=UCXCXxhRVYvBOX45_gxr0iHA    "~Christian Henson Music                | YT  |"    "Music"
+https://youtube.com/feeds/videos.xml?channel_id=UCMHG0rJtVF1LohiP63FJakw    "~Guy Michelmore                        | YT  |"    "Music"
+https://youtube.com/feeds/videos.xml?channel_id=UCtmY49Zn4l0RMJnTWfV7Wsg    "~Jacob Collier                         | YT  |"    "Music"
+https://youtube.com/feeds/videos.xml?channel_id=UCafxR2HWJRmMfSdyZXvZMTw    "~LOOK MUM NO COMPUTER                  | YT  |"    "Music"
+https://youtube.com/feeds/videos.xml?channel_id=UCJquYOG5EL82sKTfH9aMA9Q    "~Rick Beato                            | YT  |"    "Music"
+https://youtube.com/feeds/videos.xml?channel_id=UCapo4XcpVOlTLkbKIDL0WlA    "~You Suck at Producing                 | YT  |"    "Music"
+._________________.
+=======TECH========
+._________________.
 -------Linux-------
-https://youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg    "~DistroTube"                           "YouTube"   "Linux"
-https://youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA    "~Luke Smith"                           "YouTube"   "Linux"
-https://youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA    "~Mental Outlaw"                        "YouTube"   "Linux"
-https://youtube.com/feeds/videos.xml?channel_id=UCCIHOP7e271SIumQgyl6XBQ    "~Old Tech Bloke"                       "YouTube"   "Linux"
-._.
+https://youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg    "~DistroTube                            | YT  |"    "Linux"
+https://youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA    "~Luke Smith                            | YT  |"    "Linux"
+https://youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA    "~Mental Outlaw                         | YT  |"    "Linux"
+https://youtube.com/feeds/videos.xml?channel_id=UCCIHOP7e271SIumQgyl6XBQ    "~Old Tech Bloke                        | YT  |"    "Linux"
+._________________.
 ----Programming---- 
-https://youtube.com/feeds/videos.xml?channel_id=UC-8QAzbLcRglXeN_MY9blyw    "~Ben Awad"                             "YouTube"   "Programming"
-https://youtube.com/feeds/videos.xml?channel_id=UCXPHFM88IlFn68OmLwtPmZA    "~Greg Hurrell"                         "YouTube"   "Programming"
-https://youtube.com/feeds/videos.xml?channel_id=UC-yuWVUplUJZvieEligKBkA    "~javidx9"                              "YouTube"   "Programming"
-._.
--------Tech--------
-https://youtube.com/feeds/videos.xml?channel_id=UChIs72whgZI9w6d6FhwGGHA    "~Gamer's Nexus"                        "YouTube"   "Tech"
-https://youtube.com/feeds/videos.xml?channel_id=UCkWQ0gDrqOCarmUKmppD7GQ    "~JayzTwoCents"                         "YouTube"   "Tech"
-https://youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA0Tunw    "~LMG - Linus Tech Tips"                "YouTube"   "Tech"
-https://youtube.com/feeds/videos.xml?channel_id=UCeeFfhMcJa1kjtfZAGskOCA    "~LMG - TechLinked"                     "YouTube"   "Tech"
-https://youtube.com/feeds/videos.xml?channel_id=UC0vBXGSyV14uvJ4hECDOl0Q    "~LMG - Techquickie"                    "YouTube"   "Tech"
-https://youtube.com/feeds/videos.xml?channel_id=UCRYOj4DmyxhBVrdvbsUwmAA    "~Optimum Tech"                         "YouTube"   "Tech"
-._.
-
+https://youtube.com/feeds/videos.xml?channel_id=UC-8QAzbLcRglXeN_MY9blyw    "~Ben Awad                              | YT  |"    "Programming"
+https://youtube.com/feeds/videos.xml?channel_id=UCNzszbnvQeFzObW0ghk0Ckw    "~Dave's Garage                         | YT  |"    "Programming"
+https://youtube.com/feeds/videos.xml?channel_id=UCXPHFM88IlFn68OmLwtPmZA    "~Greg Hurrell                          | YT  |"    "Programming"
+https://youtube.com/feeds/videos.xml?channel_id=UC-yuWVUplUJZvieEligKBkA    "~javidx9                               | YT  |"    "Programming"
+._________________.
+-----Hardware------
+https://youtube.com/feeds/videos.xml?channel_id=UChIs72whgZI9w6d6FhwGGHA    "~Gamer's Nexus                         | YT  |"    "Tech"
+https://youtube.com/feeds/videos.xml?channel_id=UCkWQ0gDrqOCarmUKmppD7GQ    "~JayzTwoCents                          | YT  |"    "Tech"
+https://youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA0Tunw    "~LMG - Linus Tech Tips                 | YT  |"    "Tech"
+https://youtube.com/feeds/videos.xml?channel_id=UCeeFfhMcJa1kjtfZAGskOCA    "~LMG - TechLinked                      | YT  |"    "Tech"
+https://youtube.com/feeds/videos.xml?channel_id=UC0vBXGSyV14uvJ4hECDOl0Q    "~LMG - Techquickie                     | YT  |"    "Tech"
+https://youtube.com/feeds/videos.xml?channel_id=UCRYOj4DmyxhBVrdvbsUwmAA    "~Optimum Tech                          | YT  |"    "Tech"
+._________________.
+===ENTERTAINMENT===
+._________________.
 ------Gaming-------
-https://youtube.com/feeds/videos.xml?channel_id=UCdoPCztTOW7BJUPk2h5ttXA    "~Call Me Kevin"                        "YouTube"   "Gaming"
-https://youtube.com/feeds/videos.xml?channel_id=UCQ0uJ8rlpTU0HwDTVBJdizA    "~Corpse Husband Gaming & Clips"        "YouTube"   "Gaming"
-https://youtube.com/feeds/videos.xml?channel_id=UCUT8RoNBTJvwW1iErP6-b-A    "~Disguised Toast"                      "YouTube"   "Gaming"
-https://youtube.com/feeds/videos.xml?channel_id=UCddX-H9xUwQH6jOOHuL2vYw    "~Hafu"                                 "YouTube"   "Gaming"
-https://youtube.com/feeds/videos.xml?channel_id=UCSdma21fnJzgmPodhC9SJ3g    "~Nakey Jakey"                          "YouTube"   "Gaming"
-https://youtube.com/feeds/videos.xml?channel_id=UCq6VFHwMzcMXbuKyG7SQYIg    "~penguinz0"                            "YouTube"   "Gaming"
-https://youtube.com/feeds/videos.xml?channel_id=UCRHXUZ0BxbkU2MYZgsuFgkQ    "~The Spiffing Brit"                    "YouTube"   "Gaming"
-https://youtube.com/feeds/videos.xml?channel_id=UCRAEUAmW9kletIzOxhpLRFw    "~Sykkuno"                              "YouTube"   "Gaming"
-https://youtube.com/feeds/videos.xml?channel_id=UCWxlUwW9BgGISaakjGM37aw    "~Valkyrae"                             "YouTube"   "Gaming"
-._.
+https://youtube.com/feeds/videos.xml?channel_id=UCdoPCztTOW7BJUPk2h5ttXA    "~Call Me Kevin                         | YT  |"    "Gaming"
+https://youtube.com/feeds/videos.xml?channel_id=UCQ0uJ8rlpTU0HwDTVBJdizA    "~Corpse Husband Gaming & Clips         | YT  |"    "Gaming"
+https://youtube.com/feeds/videos.xml?channel_id=UCUT8RoNBTJvwW1iErP6-b-A    "~Disguised Toast                       | YT  |"    "Gaming"
+https://youtube.com/feeds/videos.xml?channel_id=UCddX-H9xUwQH6jOOHuL2vYw    "~Hafu                                  | YT  |"    "Gaming"
+https://youtube.com/feeds/videos.xml?channel_id=UCSdma21fnJzgmPodhC9SJ3g    "~Nakey Jakey                           | YT  |"    "Gaming"
+https://youtube.com/feeds/videos.xml?channel_id=UCq6VFHwMzcMXbuKyG7SQYIg    "~penguinz0                             | YT  |"    "Gaming"
+https://youtube.com/feeds/videos.xml?channel_id=UCRHXUZ0BxbkU2MYZgsuFgkQ    "~The Spiffing Brit                     | YT  |"    "Gaming"
+https://youtube.com/feeds/videos.xml?channel_id=UCRAEUAmW9kletIzOxhpLRFw    "~Sykkuno                               | YT  |"    "Gaming"
+https://youtube.com/feeds/videos.xml?channel_id=UCWxlUwW9BgGISaakjGM37aw    "~Valkyrae                              | YT  |"    "Gaming"
+._________________.
 -------Other-------
-https://youtube.com/feeds/videos.xml?channel_id=UCbxQcz9k0NRRuy0ukgQTDQQ    "~Austin McConnell"                     "YouTube"   "Other" 
-https://youtube.com/feeds/videos.xml?channel_id=UCR1D15p_vdP3HkrH8wgjQRw    "~Internet Historian"                   "YouTube"   "Other"
-https://youtube.com/feeds/videos.xml?channel_id=UC8Q7XEy86Q7T-3kNpNjYgwA    "~Internet Historian: Incognito Mode"   "YouTube"   "Other"
-https://youtube.com/feeds/videos.xml?channel_id=UCrTNhL_yO3tPTdQ5XgmmWjA    "~Red Letter Media"                     "YouTube"   "Other"
-._.
+https://youtube.com/feeds/videos.xml?channel_id=UCbxQcz9k0NRRuy0ukgQTDQQ    "~Austin McConnell                      | YT  |"    "Other" 
+https://youtube.com/feeds/videos.xml?channel_id=UCR1D15p_vdP3HkrH8wgjQRw    "~Internet Historian                    | YT  |"    "Other"
+https://youtube.com/feeds/videos.xml?channel_id=UC8Q7XEy86Q7T-3kNpNjYgwA    "~Internet Historian: Incognito Mode    | YT  |"    "Other"
+https://youtube.com/feeds/videos.xml?channel_id=UCrTNhL_yO3tPTdQ5XgmmWjA    "~Red Letter Media                      | YT  |"    "Other"
+._________________.

@@ -48,6 +48,7 @@ settings:
   content.notifications:
     https://register.watermelon-box.me: false
     https://www.chess.com: false
+    https://www.facebook.com: false
     https://www.fnac.com: false
     https://www.reddit.com: false
     https://www.youtube.com: false
@@ -65,12 +66,18 @@ settings:
     global: false
   scrolling.bar:
     global: overlay
+  statusbar.position:
+    global: bottom
   statusbar.show:
     global: in-mode
   tabs.show:
     global: switching
   tabs.width:
     global: 20%
+  url.default_page:
+    global: /home/dch/.config/qutebrowser/startpage.html
+  url.start_pages:
+    global: /home/dch/.config/qutebrowser/startpage.html
   window.hide_decoration:
     global: false
   window.transparent:

@@ -53,11 +53,12 @@ if executable('rg')
     let g:rg_derive_root='true'
 endif
 
-nnoremap <s-tab> za
+nnoremap <s-tab> zA
 
 let mapleader =" "
 
     map <leader>f :Goyo \| set linebreak<CR>
     map <leader>c :Code  <CR> 
     map <leader>p :Prose <CR> 
+    map <leader>t :vs \| terminal<CR> 
 
