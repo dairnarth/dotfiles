@@ -12,7 +12,7 @@ diff -up ../original/dwm-6.2/Makefile ./Makefile
  	mkdir -p dwm-${VERSION}
 diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 --- ../original/dwm-6.2/config.def.h	2019-02-02 12:55:28.000000000 +0000
-+++ ./config.def.h	2021-01-28 11:20:52.997455426 +0000
++++ ./config.def.h	2021-04-01 05:35:28.844726510 +0100
 @@ -2,16 +2,19 @@
  
  /* appearance */
@@ -40,13 +40,13 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
  static const char *colors[][3]      = {
  	/*               fg         bg         border   */
  	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-@@ -19,71 +22,101 @@ static const char *colors[][3]      = {
+@@ -19,71 +22,102 @@ static const char *colors[][3]      = {
  };
  
  /* tagging */
 -static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 +// static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-+static const char *tags[] = { "", "", "③", "", "", "", "", "", "" };
++static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
  
  static const Rule rules[] = {
  	/* xprop(1):
@@ -64,6 +64,7 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 +	{ "Tor Browser",            NULL,       NULL,                   1 << 4,    1,          0,           0,        -1 },
 +	{ NULL,                     NULL,       "qbittorrent v4.3.3",   1 << 4,    0,          0,           0,        -1 },
 +	{ "ranger",                 NULL,       NULL,                   1 << 1,    0,          1,           0,        -1 },
++	{ "libreoffice",            NULL,       NULL,                   1 << 2,    0,          1,           0,        -1 },
 +	{ "newsboat",               NULL,       NULL,                   1 << 6,    0,          1,           0,        -1 },
 +	{ "mpv",                    NULL,       NULL,                   1 << 7,    0,          0,           0,        -1 },
 +	{ "cmus",                   NULL,       NULL,                   1 << 8,    0,          0,           0,        -1 },
@@ -166,7 +167,7 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
  	TAGKEYS(                        XK_1,                      0)
  	TAGKEYS(                        XK_2,                      1)
  	TAGKEYS(                        XK_3,                      2)
-@@ -94,14 +127,15 @@ static Key keys[] = {
+@@ -94,14 +128,15 @@ static Key keys[] = {
  	TAGKEYS(                        XK_8,                      7)
  	TAGKEYS(                        XK_9,                      8)
  	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
