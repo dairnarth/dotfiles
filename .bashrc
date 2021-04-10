@@ -8,14 +8,16 @@
 shopt -s autocd
 set -o vi
 
-if [ "$EUID" -ne 0 ]; then
-
-    PS1='\e[30m\e[107m [\u@\h]: \e[0m \e[36m\w \n\e[30m\e[107m $(/bin/date "+%y%m%d %H%M%S") \e[0m \$ '
-
-else
-
-    PS1='\e[30m\e[101m [\u@\h]:\e[0m \e[36m\w \n\e[30m\e[101m $(/bin/date "+%y%m%d %H%M%S") \e[0m \e[31m\$ '
-
-fi
+# if [ "$EUID" -ne 0 ]; then
+# 
+#     PS1='\e[30m\e[107m [\u@\h]: \e[0m \e[36m\w \n\e[30m\e[107m $(/bin/date "+%y%m%d %H%M%S") \e[0m \$ '
+# 
+# else
+# 
+#     PS1='\e[30m\e[101m [\u@\h]:\e[0m \e[36m\w \n\e[30m\e[101m $(/bin/date "+%y%m%d %H%M%S") \e[0m \e[31m\$ '
+# 
+# fi
 
 [[ -f ~/.aliases ]] && . ~/.aliases
+
+eval "$(starship init bash)"

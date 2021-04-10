@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# # # # # #
+# ALIASES #
+# # # # # #
+
 # System
 alias d="doas"
 alias ls='ls -lah --color=auto --group-directories-first'
@@ -22,19 +26,20 @@ alias cbp='vc $HOME/.bash_profile'
 
 # Suckless
 alias mci='doas make clean install'
-alias cdwm='cd /usr/local/src/suckless/dwm/dch-dwm && vc config.def.h'
-alias cst='cd /usr/local/src/suckless/st/dch-st && vc config.h'
-alias cdmenu='cd /usr/local/src/suckless/dmenu/dch-dmenu && vc config.def.h'
-alias diffdmenu="rm $HOME/.config/suckless/dch-dmenu.diff && cd /usr/local/src/suckless/dmenu/dch-dmenu/ && diff -up ../original/dmenu-5.0/ ./ > $HOME/.config/suckless/dch-dmenu.diff && cd"
-alias diffdwm="rm $HOME/.config/suckless/dch-dwm.diff && cd /usr/local/src/suckless/dwm/dch-dwm/ && diff -up ../original/dwm-6.2/ ./ > $HOME/.config/suckless/dch-dwm.diff && cd"
-alias diffst="rm $HOME/.config/suckless/dch-st.diff && cd /usr/local/src/suckless/st/dch-st/ && diff -up ../original/st-0.8.4/ ./ > $HOME/.config/suckless/dch-st.diff && cd"
+alias cdmenu='config_menu dmenu'
+alias cdwm='config_menu dwm'
+alias cst='config_menu st'
 
 # Git
 alias dfc='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
 
 # Plex
-alias plexconf='ssh cs@192.168.1.110 -L 8888:localhost:32400'
+alias plexconf='ssh cs@192.168.1.110'
 
 # Xephyr
 alias Xe='setsid Xephyr -ac -br -screen 1680x1050 :1'
 alias D1='DISPLAY=:1'
+
+# # # # # # #
+# FUNCTIONS #
+# # # # # # #

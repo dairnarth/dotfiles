@@ -12,7 +12,7 @@ diff -up ../original/dwm-6.2/Makefile ./Makefile
  	mkdir -p dwm-${VERSION}
 diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 --- ../original/dwm-6.2/config.def.h	2019-02-02 12:55:28.000000000 +0000
-+++ ./config.def.h	2021-04-01 05:35:28.844726510 +0100
++++ ./config.def.h	2021-04-08 19:24:17.081634255 +0100
 @@ -2,16 +2,19 @@
  
  /* appearance */
@@ -114,7 +114,7 @@ diff -up ../original/dwm-6.2/config.def.h ./config.def.h
 +static const char *poweroffcmd[]  = { "safe_shutdown", NULL };
 +static const char scratchpadname[] = "scratchpad";
 +static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
-+static const char *configcmd[] = { "config_menu", NULL };
++static const char *configcmd[] = { "config_menu", "-d", NULL };
  
  static Key keys[] = {
  	/* modifier                     key        function        argument */
@@ -204,10 +204,58 @@ diff -up ../original/dwm-6.2/config.mk ./config.mk
  CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=2 -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
 Only in ./: drw.o
 Only in ./: dwm
+diff -up ../original/dwm-6.2/dwm.1 ./dwm.1
+--- ../original/dwm-6.2/dwm.1	2019-02-02 12:55:28.000000000 +0000
++++ ./dwm.1	2021-04-08 15:05:48.541183417 +0100
+@@ -30,6 +30,14 @@ top left corner.  The tags which are app
+ indicated with an empty square in the top left corner.
+ .P
+ dwm draws a small border around windows to indicate the focus state.
++.P
++On start, dwm can start additional programs that may be specified in two special
++shell scripts (see the FILES section below), autostart_blocking.sh and
++autostart.sh.  The former is executed first and dwm will wait for its
++termination before starting.  The latter is executed in the background before
++dwm enters its handler loop.
++.P
++Either of these files may be omitted.
+ .SH OPTIONS
+ .TP
+ .B \-v
+@@ -152,6 +160,21 @@ Toggles focused window between floating
+ .TP
+ .B Mod1\-Button3
+ Resize focused window while dragging. Tiled windows will be toggled to the floating state.
++.SH FILES
++The files containing programs to be started along with dwm are searched for in
++the following directories:
++.IP "1. $XDG_DATA_HOME/dwm"
++.IP "2. $HOME/.local/share/dwm"
++.IP "3. $HOME/.dwm"
++.P
++The first existing directory is scanned for any of the autostart files below.
++.TP 15
++autostart.sh
++This file is started as a shell background process before dwm enters its handler
++loop.
++.TP 15
++autostart_blocking.sh
++This file is started before any autostart.sh; dwm waits for its termination.
+ .SH CUSTOMIZATION
+ dwm is customized by creating a custom config.h and (re)compiling the source
+ code. This keeps it fast, secure and simple.
 diff -up ../original/dwm-6.2/dwm.c ./dwm.c
 --- ../original/dwm-6.2/dwm.c	2019-02-02 12:55:28.000000000 +0000
-+++ ./dwm.c	2021-01-15 00:00:56.987449126 +0000
-@@ -40,6 +40,12 @@
++++ ./dwm.c	2021-04-08 15:05:48.541183417 +0100
+@@ -29,6 +29,7 @@
+ #include <string.h>
+ #include <unistd.h>
+ #include <sys/types.h>
++#include <sys/stat.h>
+ #include <sys/wait.h>
+ #include <X11/cursorfont.h>
+ #include <X11/keysym.h>
+@@ -40,6 +41,12 @@
  #include <X11/extensions/Xinerama.h>
  #endif /* XINERAMA */
  #include <X11/Xft/Xft.h>
@@ -220,7 +268,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  
  #include "drw.h"
  #include "util.h"
-@@ -49,11 +55,11 @@
+@@ -49,11 +56,11 @@
  #define CLEANMASK(mask)         (mask & ~(numlockmask|LockMask) & (ShiftMask|ControlMask|Mod1Mask|Mod2Mask|Mod3Mask|Mod4Mask|Mod5Mask))
  #define INTERSECT(x,y,w,h,m)    (MAX(0, MIN((x)+(w),(m)->wx+(m)->ww) - MAX((x),(m)->wx)) \
                                 * MAX(0, MIN((y)+(h),(m)->wy+(m)->wh) - MAX((y),(m)->wy)))
@@ -235,7 +283,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  #define TAGMASK                 ((1 << LENGTH(tags)) - 1)
  #define TEXTW(X)                (drw_fontset_getwidth(drw, (X)) + lrpad)
  
-@@ -92,9 +98,11 @@ struct Client {
+@@ -92,9 +99,11 @@ struct Client {
  	int basew, baseh, incw, inch, maxw, maxh, minw, minh;
  	int bw, oldbw;
  	unsigned int tags;
@@ -248,7 +296,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  	Monitor *mon;
  	Window win;
  };
-@@ -138,6 +146,8 @@ typedef struct {
+@@ -138,6 +147,8 @@ typedef struct {
  	const char *title;
  	unsigned int tags;
  	int isfloating;
@@ -257,7 +305,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  	int monitor;
  } Rule;
  
-@@ -163,6 +173,8 @@ static void detachstack(Client *c);
+@@ -163,6 +174,8 @@ static void detachstack(Client *c);
  static Monitor *dirtomon(int dir);
  static void drawbar(Monitor *m);
  static void drawbars(void);
@@ -266,15 +314,17 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  static void enternotify(XEvent *e);
  static void expose(XEvent *e);
  static void focus(Client *c);
-@@ -192,6 +204,7 @@ static void resize(Client *c, int x, int
+@@ -192,7 +205,9 @@ static void resize(Client *c, int x, int
  static void resizeclient(Client *c, int x, int y, int w, int h);
  static void resizemouse(const Arg *arg);
  static void restack(Monitor *m);
 +static void rotatestack(const Arg *arg);
  static void run(void);
++static void runautostart(void);
  static void scan(void);
  static int sendevent(Client *c, Atom proto);
-@@ -211,6 +224,9 @@ static void tagmon(const Arg *arg);
+ static void sendmon(Client *c, Monitor *m);
+@@ -211,6 +226,9 @@ static void tagmon(const Arg *arg);
  static void tile(Monitor *);
  static void togglebar(const Arg *arg);
  static void togglefloating(const Arg *arg);
@@ -284,7 +334,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  static void toggletag(const Arg *arg);
  static void toggleview(const Arg *arg);
  static void unfocus(Client *c, int setfocus);
-@@ -227,6 +243,7 @@ static void updatetitle(Client *c);
+@@ -227,6 +245,7 @@ static void updatetitle(Client *c);
  static void updatewindowtype(Client *c);
  static void updatewmhints(Client *c);
  static void view(const Arg *arg);
@@ -292,7 +342,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  static Client *wintoclient(Window w);
  static Monitor *wintomon(Window w);
  static int xerror(Display *dpy, XErrorEvent *ee);
-@@ -234,6 +251,12 @@ static int xerrordummy(Display *dpy, XEr
+@@ -234,8 +253,18 @@ static int xerrordummy(Display *dpy, XEr
  static int xerrorstart(Display *dpy, XErrorEvent *ee);
  static void zoom(const Arg *arg);
  
@@ -303,9 +353,15 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
 +static pid_t winpid(Window w);
 +
  /* variables */
++static const char autostartblocksh[] = "autostart_blocking.sh";
++static const char autostartsh[] = "autostart.sh";
  static const char broken[] = "broken";
++static const char dwmdir[] = "dwm";
++static const char localshare[] = ".local/share";
  static char stext[256];
-@@ -268,9 +291,13 @@ static Drw *drw;
+ static int screen;
+ static int sw, sh;           /* X display screen geometry width, height */
+@@ -268,9 +297,13 @@ static Drw *drw;
  static Monitor *mons, *selmon;
  static Window root, wmcheckwin;
  
@@ -319,7 +375,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  /* compile-time check if all tags fit into an unsigned int bit array. */
  struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
  
-@@ -297,6 +324,8 @@ applyrules(Client *c)
+@@ -297,6 +330,8 @@ applyrules(Client *c)
  		&& (!r->class || strstr(class, r->class))
  		&& (!r->instance || strstr(instance, r->instance)))
  		{
@@ -328,7 +384,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  			c->isfloating = r->isfloating;
  			c->tags |= r->tags;
  			for (m = mons; m && m->num != r->monitor; m = m->next);
-@@ -414,6 +443,53 @@ attachstack(Client *c)
+@@ -414,6 +449,53 @@ attachstack(Client *c)
  }
  
  void
@@ -382,7 +438,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  buttonpress(XEvent *e)
  {
  	unsigned int i, x, click;
-@@ -652,6 +728,9 @@ destroynotify(XEvent *e)
+@@ -652,6 +734,9 @@ destroynotify(XEvent *e)
  
  	if ((c = wintoclient(ev->window)))
  		unmanage(c, 1);
@@ -392,7 +448,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  }
  
  void
-@@ -752,6 +831,28 @@ drawbars(void)
+@@ -752,6 +837,28 @@ drawbars(void)
  }
  
  void
@@ -421,7 +477,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  enternotify(XEvent *e)
  {
  	Client *c;
-@@ -827,6 +928,7 @@ focusmon(const Arg *arg)
+@@ -827,6 +934,7 @@ focusmon(const Arg *arg)
  	unfocus(selmon->sel, 0);
  	selmon = m;
  	focus(NULL);
@@ -429,7 +485,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  }
  
  void
-@@ -1017,12 +1119,13 @@ killclient(const Arg *arg)
+@@ -1017,12 +1125,13 @@ killclient(const Arg *arg)
  void
  manage(Window w, XWindowAttributes *wa)
  {
@@ -444,7 +500,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  	/* geometry */
  	c->x = c->oldx = wa->x;
  	c->y = c->oldy = wa->y;
-@@ -1037,6 +1140,7 @@ manage(Window w, XWindowAttributes *wa)
+@@ -1037,6 +1146,7 @@ manage(Window w, XWindowAttributes *wa)
  	} else {
  		c->mon = selmon;
  		applyrules(c);
@@ -452,7 +508,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  	}
  
  	if (c->x + WIDTH(c) > c->mon->mx + c->mon->mw)
-@@ -1049,6 +1153,14 @@ manage(Window w, XWindowAttributes *wa)
+@@ -1049,6 +1159,14 @@ manage(Window w, XWindowAttributes *wa)
  		&& (c->x + (c->w / 2) < c->mon->wx + c->mon->ww)) ? bh : c->mon->my);
  	c->bw = borderpx;
  
@@ -467,7 +523,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  	wc.border_width = c->bw;
  	XConfigureWindow(dpy, w, CWBorderWidth, &wc);
  	XSetWindowBorder(dpy, w, scheme[SchemeNorm][ColBorder].pixel);
-@@ -1073,6 +1185,8 @@ manage(Window w, XWindowAttributes *wa)
+@@ -1073,6 +1191,8 @@ manage(Window w, XWindowAttributes *wa)
  	c->mon->sel = c;
  	arrange(c->mon);
  	XMapWindow(dpy, c->win);
@@ -476,7 +532,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  	focus(NULL);
  }
  
-@@ -1276,12 +1390,36 @@ void
+@@ -1276,12 +1396,36 @@ void
  resizeclient(Client *c, int x, int y, int w, int h)
  {
  	XWindowChanges wc;
@@ -517,7 +573,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  	XConfigureWindow(dpy, c->win, CWX|CWY|CWWidth|CWHeight|CWBorderWidth, &wc);
  	configure(c);
  	XSync(dpy, False);
-@@ -1367,6 +1505,40 @@ restack(Monitor *m)
+@@ -1367,6 +1511,40 @@ restack(Monitor *m)
  	}
  	XSync(dpy, False);
  	while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
@@ -558,7 +614,91 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  }
  
  void
-@@ -1641,6 +1813,7 @@ spawn(const Arg *arg)
+@@ -1381,6 +1559,83 @@ run(void)
+ }
+ 
+ void
++runautostart(void)
++{
++	char *pathpfx;
++	char *path;
++	char *xdgdatahome;
++	char *home;
++	struct stat sb;
++
++	if ((home = getenv("HOME")) == NULL)
++		/* this is almost impossible */
++		return;
++
++	/* if $XDG_DATA_HOME is set and not empty, use $XDG_DATA_HOME/dwm,
++	 * otherwise use ~/.local/share/dwm as autostart script directory
++	 */
++	xdgdatahome = getenv("XDG_DATA_HOME");
++	if (xdgdatahome != NULL && *xdgdatahome != '\0') {
++		/* space for path segments, separators and nul */
++		pathpfx = ecalloc(1, strlen(xdgdatahome) + strlen(dwmdir) + 2);
++
++		if (sprintf(pathpfx, "%s/%s", xdgdatahome, dwmdir) <= 0) {
++			free(pathpfx);
++			return;
++		}
++	} else {
++		/* space for path segments, separators and nul */
++		pathpfx = ecalloc(1, strlen(home) + strlen(localshare)
++		                     + strlen(dwmdir) + 3);
++
++		if (sprintf(pathpfx, "%s/%s/%s", home, localshare, dwmdir) < 0) {
++			free(pathpfx);
++			return;
++		}
++	}
++
++	/* check if the autostart script directory exists */
++	if (! (stat(pathpfx, &sb) == 0 && S_ISDIR(sb.st_mode))) {
++		/* the XDG conformant path does not exist or is no directory
++		 * so we try ~/.dwm instead
++		 */
++		char *pathpfx_new = realloc(pathpfx, strlen(home) + strlen(dwmdir) + 3);
++		if(pathpfx_new == NULL) {
++			free(pathpfx);
++			return;
++		}
++		pathpfx = pathpfx_new;
++
++		if (sprintf(pathpfx, "%s/.%s", home, dwmdir) <= 0) {
++			free(pathpfx);
++			return;
++		}
++	}
++
++	/* try the blocking script first */
++	path = ecalloc(1, strlen(pathpfx) + strlen(autostartblocksh) + 2);
++	if (sprintf(path, "%s/%s", pathpfx, autostartblocksh) <= 0) {
++		free(path);
++		free(pathpfx);
++	}
++
++	if (access(path, X_OK) == 0)
++		system(path);
++
++	/* now the non-blocking script */
++	if (sprintf(path, "%s/%s", pathpfx, autostartsh) <= 0) {
++		free(path);
++		free(pathpfx);
++	}
++
++	if (access(path, X_OK) == 0)
++		system(strcat(path, " &"));
++
++	free(pathpfx);
++	free(path);
++}
++
++void
+ scan(void)
+ {
+ 	unsigned int i, num;
+@@ -1641,6 +1896,7 @@ spawn(const Arg *arg)
  {
  	if (arg->v == dmenucmd)
  		dmenumon[0] = '0' + selmon->num;
@@ -566,7 +706,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  	if (fork() == 0) {
  		if (dpy)
  			close(ConnectionNumber(dpy));
-@@ -1659,6 +1832,8 @@ tag(const Arg *arg)
+@@ -1659,6 +1915,8 @@ tag(const Arg *arg)
  		selmon->sel->tags = arg->ui & TAGMASK;
  		focus(NULL);
  		arrange(selmon);
@@ -575,7 +715,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  	}
  }
  
-@@ -1720,6 +1895,44 @@ togglefloating(const Arg *arg)
+@@ -1720,6 +1978,44 @@ togglefloating(const Arg *arg)
  }
  
  void
@@ -620,7 +760,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  toggletag(const Arg *arg)
  {
  	unsigned int newtags;
-@@ -1765,6 +1978,20 @@ unmanage(Client *c, int destroyed)
+@@ -1765,6 +2061,20 @@ unmanage(Client *c, int destroyed)
  	Monitor *m = c->mon;
  	XWindowChanges wc;
  
@@ -641,7 +781,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  	detach(c);
  	detachstack(c);
  	if (!destroyed) {
-@@ -1779,9 +2006,12 @@ unmanage(Client *c, int destroyed)
+@@ -1779,9 +2089,12 @@ unmanage(Client *c, int destroyed)
  		XUngrabServer(dpy);
  	}
  	free(c);
@@ -657,7 +797,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  }
  
  void
-@@ -2044,6 +2274,158 @@ view(const Arg *arg)
+@@ -2044,6 +2357,158 @@ view(const Arg *arg)
  	arrange(selmon);
  }
  
@@ -816,7 +956,7 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  Client *
  wintoclient(Window w)
  {
-@@ -2135,10 +2517,12 @@ main(int argc, char *argv[])
+@@ -2135,13 +2600,16 @@ main(int argc, char *argv[])
  		fputs("warning: no locale support\n", stderr);
  	if (!(dpy = XOpenDisplay(NULL)))
  		die("dwm: cannot open display");
@@ -830,5 +970,10 @@ diff -up ../original/dwm-6.2/dwm.c ./dwm.c
  		die("pledge");
  #endif /* __OpenBSD__ */
  	scan();
++	runautostart();
+ 	run();
+ 	cleanup();
+ 	XCloseDisplay(dpy);
+Only in ./: dwm.c.orig
 Only in ./: dwm.o
 Only in ./: util.o

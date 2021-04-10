@@ -1,12 +1,13 @@
-diff -up ../original/dmenu-5.0/config.def.h ./config.def.h
---- ../original/dmenu-5.0/config.def.h	2020-09-02 17:37:07.000000000 +0100
-+++ ./config.def.h	2021-01-23 08:16:51.284549389 +0000
-@@ -4,13 +4,13 @@
+diff -up /usr/local/src/suckless/dmenu/original/dmenu-5.0/config.def.h ./config.def.h
+--- /usr/local/src/suckless/dmenu/original/dmenu-5.0/config.def.h	2020-09-02 17:37:07.000000000 +0100
++++ ./config.def.h	2021-04-10 21:19:54.393212572 +0100
+@@ -4,13 +4,14 @@
  static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
  /* -fn option overrides fonts[0]; default X11 font or font set */
  static const char *fonts[] = {
 -	"monospace:size=10"
-+	"Anonymous Pro:bold:size=11"
++	"Anonymous Pro:bold:size=11",
++    "fontawesome:size=11"
  };
  static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
  static const char *colors[SchemeLast][2] = {
@@ -18,18 +19,17 @@ diff -up ../original/dmenu-5.0/config.def.h ./config.def.h
  	[SchemeOut] = { "#000000", "#00ffff" },
  };
  /* -l option; if nonzero, dmenu uses vertical list with given number of lines */
-@@ -21,3 +21,6 @@ static unsigned int lines      = 0;
+@@ -21,3 +22,6 @@ static unsigned int lines      = 0;
   * for example: " /?\"&[]"
   */
  static const char worddelimiters[] = " ";
 +
 +/* -n option; preselected item starting from 0 */
 +static unsigned int preselected = 0;
-Only in ./: config.def.h.rej
 Only in ./: config.h
 Only in ./: dmenu
-diff -up ../original/dmenu-5.0/dmenu.1 ./dmenu.1
---- ../original/dmenu-5.0/dmenu.1	2020-09-02 17:37:07.000000000 +0100
+diff -up /usr/local/src/suckless/dmenu/original/dmenu-5.0/dmenu.1 ./dmenu.1
+--- /usr/local/src/suckless/dmenu/original/dmenu-5.0/dmenu.1	2020-09-02 17:37:07.000000000 +0100
 +++ ./dmenu.1	2021-01-23 08:16:51.284549389 +0000
 @@ -8,6 +8,12 @@ dmenu \- dynamic menu
  .IR lines ]
@@ -90,16 +90,16 @@ diff -up ../original/dmenu-5.0/dmenu.1 ./dmenu.1
  arrow keys, page up, page down, home, and end.
 Only in ./: dmenu.1.orig
 Only in ./: dmenu.1.rej
-diff -up ../original/dmenu-5.0/dmenu.c ./dmenu.c
---- ../original/dmenu-5.0/dmenu.c	2020-09-02 17:37:07.000000000 +0100
-+++ ./dmenu.c	2021-01-28 10:39:49.924119801 +0000
+diff -up /usr/local/src/suckless/dmenu/original/dmenu-5.0/dmenu.c ./dmenu.c
+--- /usr/local/src/suckless/dmenu/original/dmenu-5.0/dmenu.c	2020-09-02 17:37:07.000000000 +0100
++++ ./dmenu.c	2021-03-12 10:18:15.543906678 +0000
 @@ -37,6 +37,9 @@ struct item {
  static char text[BUFSIZ] = "";
  static char *embed;
  static int bh, mw, mh;
-+static int dmx = 304; /* put dmenu at this x offset */
++static int dmx = 302; /* put dmenu at this x offset */
 +static int dmy = 0; /* put dmenu at this y offset (measured from the bottom if topbar is 0) */
-+static unsigned int dmw = 1494; /* make dmenu this wide */
++static unsigned int dmw = 1496; /* make dmenu this wide */
  static int inputw = 0, promptw;
  static int lrpad; /* sum of left and right padding */
  static size_t cursor;
@@ -184,6 +184,29 @@ diff -up ../original/dmenu-5.0/dmenu.c ./dmenu.c
 Only in ./: dmenu.c.orig
 Only in ./: dmenu.c.rej
 Only in ./: dmenu.o
+diff -up /usr/local/src/suckless/dmenu/original/dmenu-5.0/drw.c ./drw.c
+--- /usr/local/src/suckless/dmenu/original/dmenu-5.0/drw.c	2020-09-02 17:37:07.000000000 +0100
++++ ./drw.c	2021-04-10 21:15:47.686804830 +0100
+@@ -133,19 +133,6 @@ xfont_create(Drw *drw, const char *fontn
+ 		die("no font specified.");
+ 	}
+ 
+-	/* Do not allow using color fonts. This is a workaround for a BadLength
+-	 * error from Xft with color glyphs. Modelled on the Xterm workaround. See
+-	 * https://bugzilla.redhat.com/show_bug.cgi?id=1498269
+-	 * https://lists.suckless.org/dev/1701/30932.html
+-	 * https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=916349
+-	 * and lots more all over the internet.
+-	 */
+-	FcBool iscol;
+-	if(FcPatternGetBool(xfont->pattern, FC_COLOR, 0, &iscol) == FcResultMatch && iscol) {
+-		XftFontClose(drw->dpy, xfont);
+-		return NULL;
+-	}
+-
+ 	font = ecalloc(1, sizeof(Fnt));
+ 	font->xfont = xfont;
+ 	font->pattern = pattern;
 Only in ./: drw.o
 Only in ./: stest
 Only in ./: stest.o
