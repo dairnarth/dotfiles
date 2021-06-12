@@ -43,9 +43,11 @@ settings:
     global: false
   colors.webpage.darkmode.policy.page:
     global: smart
+  content.blocking.enabled:
+    global: true
   content.javascript.can_open_tabs_automatically:
     global: true
-  content.notifications:
+  content.notifications.enabled:
     https://register.watermelon-box.me: false
     https://www.chess.com: false
     https://www.facebook.com: false

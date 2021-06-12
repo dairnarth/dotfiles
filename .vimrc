@@ -37,11 +37,7 @@ hi Normal guibg=NONE ctermbg=NONE
 command! Prose inoremap <buffer> . .<C-G>u|
             \ inoremap <buffer> ! !<C-G>u|
             \ inoremap <buffer> ? ?<C-G>u|
-            \ setlocal spell spelllang=en nolist nowrap tw=80 fo=t1 fdm=manual|
-            \ augroup PROSE|
-            \   autocmd InsertEnter <buffer> set fo+=a|
-            \   autocmd InsertLeave <buffer> set fo-=a|
-            \ augroup END|
+            \ setlocal spell spelllang=en nolist wrap linebreak fo=t1 fdm=manual|
 
 command! Code silent! iunmap <buffer> .|
             \ silent! iunmap <buffer> !|
@@ -62,3 +58,15 @@ let mapleader =" "
     map <leader>p :Prose <CR> 
     map <leader>t :vs \| terminal<CR> 
 
+autocmd BufNewFile *.mom 0put =\".PAPER A4\<nl>
+            \.PRINTSTYLE TYPESET\<nl>
+            \.L_MARGIN 2.5cm\<nl>
+            \.R_MARGIN 2.5cm\<nl>
+            \\\#\<nl>
+            \.FAMILY T\<nl>
+            \.PT_SIZE 11\<nl>
+            \.AUTOLEAD 1\<nl>
+            \\\#\<nl>
+            \.START\<nl>
+            \\<nl>
+            \\"|$

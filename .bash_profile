@@ -2,10 +2,12 @@
 # ~/.bash_profile
 #
 export PATH="$HOME/.scripts:$PATH"
-export EDITOR="vim"
+export EDITOR="nvim"
 export TERMINAL="st"
 export BROWSER="qutebrowser"
 export ALTBROWSER="lynx"
+
+export QT_QPA_PLATFORMTHEME="qt5ct"
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 

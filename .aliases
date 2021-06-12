@@ -6,13 +6,16 @@
 
 # System
 alias d="doas"
-alias ls='ls -lah --color=auto --group-directories-first'
+which exa && \
+    alias ls='exa -aagl --color-scale --group-directories-first' && \
+    alias lt='exa -aglT --color-scale --group-directories-first' || \
+    alias ls='ls -lah --color=auto --group-directories-first'
 alias p='paru'
 alias mkd='mkdir -pv'
 
 # Directories
-
 alias gsrc='cd /usr/local/src'
+alias gtfmp='cd $HOME/Dropbox/Dylan\ Cairns-Howarth/Documents/TFMP'
 
 # Vim
 alias vp='nvim -c :Prose'
@@ -35,6 +38,9 @@ alias dfc='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
 
 # Plex
 alias plexconf='ssh cs@192.168.1.110'
+
+# Qsynth
+alias qsynth='qsynth -a pulseaudio /usr/share/sounds/sf2/FluidR3_GM.sf2'
 
 # Xephyr
 alias Xe='setsid Xephyr -ac -br -screen 1680x1050 :1'
