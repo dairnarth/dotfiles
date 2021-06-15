@@ -1,5 +1,5 @@
-diff -up /usr/local/src/suckless/dmenu/original/dmenu-5.0/config.def.h ./config.def.h
---- /usr/local/src/suckless/dmenu/original/dmenu-5.0/config.def.h	2020-09-02 17:37:07.000000000 +0100
+diff -up ../original/dmenu-5.0/config.def.h ./config.def.h
+--- ../original/dmenu-5.0/config.def.h	2020-09-02 17:37:07.000000000 +0100
 +++ ./config.def.h	2021-04-10 21:19:54.393212572 +0100
 @@ -4,13 +4,14 @@
  static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
@@ -28,8 +28,8 @@ diff -up /usr/local/src/suckless/dmenu/original/dmenu-5.0/config.def.h ./config.
 +static unsigned int preselected = 0;
 Only in ./: config.h
 Only in ./: dmenu
-diff -up /usr/local/src/suckless/dmenu/original/dmenu-5.0/dmenu.1 ./dmenu.1
---- /usr/local/src/suckless/dmenu/original/dmenu-5.0/dmenu.1	2020-09-02 17:37:07.000000000 +0100
+diff -up ../original/dmenu-5.0/dmenu.1 ./dmenu.1
+--- ../original/dmenu-5.0/dmenu.1	2020-09-02 17:37:07.000000000 +0100
 +++ ./dmenu.1	2021-01-23 08:16:51.284549389 +0000
 @@ -8,6 +8,12 @@ dmenu \- dynamic menu
  .IR lines ]
@@ -88,10 +88,8 @@ diff -up /usr/local/src/suckless/dmenu/original/dmenu-5.0/dmenu.1 ./dmenu.1
  .SH USAGE
  dmenu is completely controlled by the keyboard.  Items are selected using the
  arrow keys, page up, page down, home, and end.
-Only in ./: dmenu.1.orig
-Only in ./: dmenu.1.rej
-diff -up /usr/local/src/suckless/dmenu/original/dmenu-5.0/dmenu.c ./dmenu.c
---- /usr/local/src/suckless/dmenu/original/dmenu-5.0/dmenu.c	2020-09-02 17:37:07.000000000 +0100
+diff -up ../original/dmenu-5.0/dmenu.c ./dmenu.c
+--- ../original/dmenu-5.0/dmenu.c	2020-09-02 17:37:07.000000000 +0100
 +++ ./dmenu.c	2021-03-12 10:18:15.543906678 +0000
 @@ -37,6 +37,9 @@ struct item {
  static char text[BUFSIZ] = "";
@@ -181,11 +179,9 @@ diff -up /usr/local/src/suckless/dmenu/original/dmenu-5.0/dmenu.c ./dmenu.c
  		else
  			usage();
  
-Only in ./: dmenu.c.orig
-Only in ./: dmenu.c.rej
 Only in ./: dmenu.o
-diff -up /usr/local/src/suckless/dmenu/original/dmenu-5.0/drw.c ./drw.c
---- /usr/local/src/suckless/dmenu/original/dmenu-5.0/drw.c	2020-09-02 17:37:07.000000000 +0100
+diff -up ../original/dmenu-5.0/drw.c ./drw.c
+--- ../original/dmenu-5.0/drw.c	2020-09-02 17:37:07.000000000 +0100
 +++ ./drw.c	2021-04-10 21:15:47.686804830 +0100
 @@ -133,19 +133,6 @@ xfont_create(Drw *drw, const char *fontn
  		die("no font specified.");

@@ -1,5 +1,5 @@
-diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/Makefile ./Makefile
---- /usr/local/src/suckless/dwm/original/dwm-6.2/Makefile	2019-02-02 12:55:28.000000000 +0000
+diff -up ../original/dwm-6.2/Makefile ./Makefile
+--- ../original/dwm-6.2/Makefile	2019-02-02 12:55:28.000000000 +0000
 +++ ./Makefile	2021-01-16 01:26:21.816750895 +0000
 @@ -26,7 +26,7 @@ dwm: ${OBJ}
  	${CC} -o $@ ${OBJ} ${LDFLAGS}
@@ -10,8 +10,8 @@ diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/Makefile ./Makefile
  
  dist: clean
  	mkdir -p dwm-${VERSION}
-diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/config.def.h ./config.def.h
---- /usr/local/src/suckless/dwm/original/dwm-6.2/config.def.h	2019-02-02 12:55:28.000000000 +0000
+diff -up ../original/dwm-6.2/config.def.h ./config.def.h
+--- ../original/dwm-6.2/config.def.h	2019-02-02 12:55:28.000000000 +0000
 +++ ./config.def.h	2021-06-13 07:30:46.545552530 +0100
 @@ -1,89 +1,129 @@
  /* See LICENSE file for copyright and license details. */
@@ -203,11 +203,9 @@ diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/config.def.h ./config.def.
  	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
  };
 -
-Only in ./: config.def.h.orig
-Only in ./: config.def.h.rej
 Only in ./: config.h
-diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/config.mk ./config.mk
---- /usr/local/src/suckless/dwm/original/dwm-6.2/config.mk	2019-02-02 12:55:28.000000000 +0000
+diff -up ../original/dwm-6.2/config.mk ./config.mk
+--- ../original/dwm-6.2/config.mk	2019-02-02 12:55:28.000000000 +0000
 +++ ./config.mk	2021-01-15 00:00:56.987449126 +0000
 @@ -19,10 +19,11 @@ FREETYPELIBS = -lfontconfig -lXft
  FREETYPEINC = /usr/include/freetype2
@@ -224,8 +222,8 @@ diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/config.mk ./config.mk
  CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=2 -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
 Only in ./: drw.o
 Only in ./: dwm
-diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/dwm.1 ./dwm.1
---- /usr/local/src/suckless/dwm/original/dwm-6.2/dwm.1	2019-02-02 12:55:28.000000000 +0000
+diff -up ../original/dwm-6.2/dwm.1 ./dwm.1
+--- ../original/dwm-6.2/dwm.1	2019-02-02 12:55:28.000000000 +0000
 +++ ./dwm.1	2021-04-08 15:05:48.541183417 +0100
 @@ -30,6 +30,14 @@ top left corner.  The tags which are app
  indicated with an empty square in the top left corner.
@@ -264,8 +262,8 @@ diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/dwm.1 ./dwm.1
  .SH CUSTOMIZATION
  dwm is customized by creating a custom config.h and (re)compiling the source
  code. This keeps it fast, secure and simple.
-diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/dwm.c ./dwm.c
---- /usr/local/src/suckless/dwm/original/dwm-6.2/dwm.c	2019-02-02 12:55:28.000000000 +0000
+diff -up ../original/dwm-6.2/dwm.c ./dwm.c
+--- ../original/dwm-6.2/dwm.c	2019-02-02 12:55:28.000000000 +0000
 +++ ./dwm.c	2021-05-19 19:22:04.589392688 +0100
 @@ -29,6 +29,7 @@
  #include <string.h>
@@ -1003,7 +1001,5 @@ diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/dwm.c ./dwm.c
  	run();
  	cleanup();
  	XCloseDisplay(dpy);
-Only in ./: dwm.c.orig
-Only in ./: dwm.c.rej
 Only in ./: dwm.o
 Only in ./: util.o
