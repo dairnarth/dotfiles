@@ -12,8 +12,8 @@ diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/Makefile ./Makefile
  	mkdir -p dwm-${VERSION}
 diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/config.def.h ./config.def.h
 --- /usr/local/src/suckless/dwm/original/dwm-6.2/config.def.h	2019-02-02 12:55:28.000000000 +0000
-+++ ./config.def.h	2021-06-03 14:50:45.230082068 +0100
-@@ -1,89 +1,128 @@
++++ ./config.def.h	2021-06-13 07:30:46.545552530 +0100
+@@ -1,89 +1,129 @@
  /* See LICENSE file for copyright and license details. */
  
  /* appearance */
@@ -66,6 +66,7 @@ diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/config.def.h ./config.def.
 +	{ "sys-config",             NULL,       NULL,                   0,         1,          0,           0,        -1 },
 +	{ NULL,                     NULL,       "Event Tester",         0,         0,          0,           1,        -1 },   /* xev */
 +	{ "St",                     NULL,       NULL,                   1 << 0,    0,          1,           0,        -1 },
++	{ "Alacritty",              NULL,       NULL,                   1 << 0,    0,          1,           0,        -1 },
 +	{ "trayer",                 NULL,       NULL,                   1 << 0,    1,          0,           1,         1 },
 +	{ "ranger",                 NULL,       NULL,                   1 << 1,    0,          1,           0,        -1 },
 +	{ "libreoffice",            NULL,       NULL,                   1 << 2,    0,          0,           0,        -1 },
@@ -114,8 +115,9 @@ diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/config.def.h ./config.def.
  /* commands */
  static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 -static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+-static const char *termcmd[]  = { "st", NULL };
 +static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-p", "Run:", NULL };
- static const char *termcmd[]  = { "st", NULL };
++static const char *termcmd[]  = { "alacritty", NULL };
 +static const char *fmcmd[]  = { "st", "-c", "ranger", "-e", "ranger", NULL };
 +static const char *rsscmd[]  = { "st", "-c", "newsboat", "-e", "newsboat", NULL };
 +static const char *musiccmd[]  = { "appicker-music", NULL };
@@ -178,7 +180,7 @@ diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/config.def.h ./config.def.
  	TAGKEYS(                        XK_1,                      0)
  	TAGKEYS(                        XK_2,                      1)
  	TAGKEYS(                        XK_3,                      2)
-@@ -94,14 +133,15 @@ static Key keys[] = {
+@@ -94,14 +134,15 @@ static Key keys[] = {
  	TAGKEYS(                        XK_8,                      7)
  	TAGKEYS(                        XK_9,                      8)
  	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
@@ -196,7 +198,7 @@ diff -up /usr/local/src/suckless/dwm/original/dwm-6.2/config.def.h ./config.def.
  	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
  	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
  	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-@@ -112,4 +152,3 @@ static Button buttons[] = {
+@@ -112,4 +153,3 @@ static Button buttons[] = {
  	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
  	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
  };
