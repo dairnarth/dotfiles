@@ -28,7 +28,7 @@ Plug 'jremmen/vim-ripgrep'
 Plug 'vim-utils/vim-man'
 Plug 'mbbill/undotree'
 
-call plug#end() 
+call plug#end()
 
 autocmd vimenter * ++nested colorscheme gruvbox
 
@@ -54,9 +54,9 @@ nnoremap <s-tab> zA
 let mapleader =" "
 
     map <leader>f :Goyo \| set linebreak<CR>
-    map <leader>c :Code  <CR> 
-    map <leader>p :Prose <CR> 
-    map <leader>t :vs \| terminal<CR> 
+    map <leader>c :Code  <CR>
+    map <leader>p :Prose <CR>
+    map <leader>t :vs \| terminal<CR>
 
 autocmd BufNewFile *.mom 0put =\".PAPER A4\<nl>
             \.PRINTSTYLE TYPESET\<nl>
