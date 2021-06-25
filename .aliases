@@ -5,7 +5,9 @@
 # # # # # #
 
 # System
-alias d="doas"
+which doas &>/dev/null &&   \
+    alias d="doas" ||       \
+    alias d="sudo"
 which exa &>/dev/null &&                                            \
     alias ls='exa -aagl --color-scale --group-directories-first' && \
     alias lt='exa -aglT --color-scale --group-directories-first' || \
