@@ -16,10 +16,12 @@ type -P paru &>/dev/null && \
     alias p='paru' ||       \
     alias p='d pacman'
 alias mkd='mkdir -pv'
+alias mcd='aliases:mcd'
 
 # Directories
 alias gsrc='cd /usr/local/src'
 alias gtfmp='cd $HOME/Dropbox/Dylan\ Cairns-Howarth/Documents/TFMP'
+alias gvrc='cd $HOME/.config/nvim/'
 
 # Vim
 alias vp='nvim -c :Prose'
@@ -58,3 +60,5 @@ alias D1='DISPLAY=:1'
 # # # # # # #
 # FUNCTIONS #
 # # # # # # #
+
+aliases:mcd() { mkdir -pv "$1" && cd "$1" }
