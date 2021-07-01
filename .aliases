@@ -40,7 +40,7 @@ alias cst='config_menu st'
 # Git
 type -P git-wrapper &>/dev/null &&                                          \
     alias dfc='git-wrapper -d' &&                                           \
-    alias g='git-wrapper' ||                                                \
+    alias g='git-wrapper' && return ||                                      \
     alias dfc='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME' &&  \
     alias g='git'
 
