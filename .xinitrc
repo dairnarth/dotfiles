@@ -33,7 +33,8 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 fi
 
 setxkbmap gb -option "caps:swapescape" &
-xrandr --output HDMI-0 --auto --output DP-0 --auto --left-of HDMI-0 --output DP-2 --auto --right-of HDMI-0 &
+#xrandr --output HDMI-0 --auto --output DP-0 --auto --left-of HDMI-0 --output DP-2 --auto --right-of HDMI-0 &
+xinput set-prop 11 316 1
 nitrogen --restore &
 picom --experimental-backends &
 unclutter --timeout 1 &
