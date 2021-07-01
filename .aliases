@@ -5,14 +5,14 @@
 # # # # # #
 
 # System
-type -P doas &>/dev/null &&   \
+type -P doas &>/dev/null && \
     alias d="doas" ||       \
     alias d="sudo"
-type -P exa &>/dev/null &&                                            \
+type -P exa &>/dev/null &&                                          \
     alias ls='exa -aagl --color-scale --group-directories-first' && \
     alias lt='exa -aglT --color-scale --group-directories-first' || \
     alias ls='ls -lah --color=auto --group-directories-first'
-type -P paru &>/dev/null &&  \
+type -P paru &>/dev/null && \
     alias p='paru' ||       \
     alias p='d pacman'
 alias mkd='mkdir -pv'
@@ -24,7 +24,7 @@ alias gtfmp='cd $HOME/Dropbox/Dylan\ Cairns-Howarth/Documents/TFMP'
 # Vim
 alias vp='nvim -c :Prose'
 alias vc='nvim -c :Code'
-alias cvrc='cd $HOME/.config/nvim/ && vc .'
+alias cvrc='nvim $HOME/.config/nvim/'
 
 # Bash
 alias ca='vc $HOME/.aliases'
@@ -38,7 +38,12 @@ alias cdwm='config_menu dwm'
 alias cst='config_menu st'
 
 # Git
-alias dfc='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
+type -P git-wrapper &>/dev/null &&                                          \
+    alias dfc='git-wrapper -d' &&                                           \
+    alias g='git-wrapper' ||                                                \
+    alias dfc='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME' &&  \
+    alias g='git'
+
 
 # Plex
 alias plexconf='ssh cs@192.168.1.110'
@@ -56,8 +61,14 @@ alias D1='DISPLAY=:1'
 
 aliases:vimconfig()
 {
-    cd $HOME/.config/nvim/ && vc .
+    cd $HOME/.config/nvim/
     case '$1' in
         "-g")
             git pull
+            ;;
+        *)
+            return
+            ;;
+    esac
+    nvim .
 }
