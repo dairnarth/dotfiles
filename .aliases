@@ -58,17 +58,3 @@ alias D1='DISPLAY=:1'
 # # # # # # #
 # FUNCTIONS #
 # # # # # # #
-
-aliases:vimconfig()
-{
-    cd $HOME/.config/nvim/
-    case '$1' in
-        "-g")
-            git pull
-            ;;
-        *)
-            return
-            ;;
-    esac
-    nvim .
-}
