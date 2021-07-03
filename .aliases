@@ -21,12 +21,12 @@ alias mcd='aliases:mcd'
 # Directories
 alias gsrc='cd /usr/local/src'
 alias gtfmp='cd $HOME/Dropbox/Dylan\ Cairns-Howarth/Documents/TFMP'
-alias gvrc='cd $HOME/.config/nvim/'
+alias gv='cd $HOME/.config/nvim/'
 
 # Vim
 alias vp='nvim -c :Prose'
 alias vc='nvim -c :Code'
-alias cvrc='nvim $HOME/.config/nvim/'
+alias cv='nvim $HOME/.config/nvim/'
 
 # Bash
 alias ca='vc $HOME/.aliases'
@@ -42,6 +42,7 @@ alias cst='config_menu st'
 # Git
 type -P git-wrapper &>/dev/null &&                                          \
     alias dfc='git-wrapper -d' &&                                           \
+    alias git='git-wrapper' &&                                           \
     alias g='git-wrapper' && return ||                                      \
     alias dfc='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME' &&  \
     alias g='git'
@@ -61,4 +62,5 @@ alias D1='DISPLAY=:1'
 # FUNCTIONS #
 # # # # # # #
 
+# TODO: this doesn't export
 aliases:mcd() { mkdir -pv "$1" && cd "$1" }
