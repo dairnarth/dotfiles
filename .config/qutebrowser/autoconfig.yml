@@ -67,7 +67,7 @@ settings:
   qt.highdpi:
     global: false
   scrolling.bar:
-    global: overlay
+    global: never
   statusbar.position:
     global: bottom
   statusbar.show:
