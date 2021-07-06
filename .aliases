@@ -26,7 +26,7 @@ alias gv='cd $HOME/.config/nvim/'
 # Vim
 alias vp='nvim -c :Prose'
 alias vc='nvim -c :Code'
-alias cv='nvim $HOME/.config/nvim/'
+alias cv='Cd="$(pwd)" && cd $HOME/.config/nvim/ && vc . && cd $Cd && unset Cd'
 
 # Bash
 alias ca='vc $HOME/.aliases'
